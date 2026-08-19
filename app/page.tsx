@@ -521,6 +521,7 @@ export default function Home() {
         <div className={`detail-overlay ${tierClass(selected.tier)}`} role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setSelected(null);
         }}>
+          <button className="detail-close-mobile" type="button" onClick={() => setSelected(null)} aria-label="关闭游戏详情">×</button>
           <article
             className={`detail-panel ${tierClass(selected.tier)}`}
             role="dialog"
