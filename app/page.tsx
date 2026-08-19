@@ -10,7 +10,6 @@ const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
 
 function posterFor(game: Game) {
-  if (game.id === "dynasty-warriors-5") return `/games/${game.id}/poster.png`;
   if (game.id === "pragmata" || game.id === "re-requiem") return `/games/${game.id}/poster.webp`;
   return `/games/${game.id}/poster.jpg`;
 }

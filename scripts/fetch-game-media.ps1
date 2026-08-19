@@ -17,6 +17,7 @@ $games = @(
   @{ Slug = "expedition-33"; AppId = 1903340 },
   @{ Slug = "wuchang"; AppId = 2277560 },
   @{ Slug = "smt-vv"; AppId = 1875830 },
+  @{ Slug = "dynasty-warriors-origins"; AppId = 2384580 },
   @{ Slug = "metaphor"; AppId = 2679460 },
   @{ Slug = "re4-remake"; AppId = 2050650 },
   @{ Slug = "stellar-blade"; AppId = 3489700 },
