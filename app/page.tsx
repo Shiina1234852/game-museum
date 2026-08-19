@@ -9,6 +9,15 @@ type StyleVars = CSSProperties & Record<`--${string}`, string>;
 const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
 
+function coverFor(game: Game) {
+  const extension = game.id === "dynasty-warriors-5" ? "png" : "jpg";
+  return `/games/${game.id}/cover.${extension}`;
+}
+
+function screenshotsFor(game: Game) {
+  return [1, 2, 3].map((index) => `/games/${game.id}/shot-${index}.jpg`);
+}
+
 function lines(title: string) {
   const parts = title.split(/[:：]/);
   return parts.length > 1 ? [`${parts[0]}：`, parts.slice(1).join("：")] : [title];
@@ -20,10 +29,12 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [latestFirst, setLatestFirst] = useState(false);
   const [selected, setSelected] = useState<Game | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState(1);
   const [dimensionId, setDimensionId] = useState(dimensions[0].id);
   const [pulse, setPulse] = useState(true);
 
   const active = games.find((game) => game.id === activeId) ?? topGames[0];
+  const selectedGallery = selected ? [coverFor(selected), ...screenshotsFor(selected)] : [];
   const activeDimension = dimensions.find((item) => item.id === dimensionId) ?? dimensions[0];
   const dimensionGames = activeDimension.gameIds
     .map((id) => games.find((game) => game.id === id))
@@ -60,6 +71,11 @@ export default function Home() {
     const rect = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
     event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
+  };
+
+  const openGame = (game: Game) => {
+    setSelected(game);
+    setGalleryIndex(1);
   };
 
   return (
@@ -118,7 +134,8 @@ export default function Home() {
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
           <div className="orbit orbit-three" />
-          <button className="core-card" type="button" onClick={() => setSelected(active)}>
+          <button className="core-card" type="button" onClick={() => openGame(active)}>
+            <img className="core-image" src={coverFor(active)} alt="" />
             <span className="core-kicker">CURRENT CANVAS · 202</span>
             <b className="core-score">{active.score.toFixed(1)}</b>
             <h2>{lines(active.title).map((line) => <span key={line}>{line}</span>)}</h2>
@@ -210,10 +227,11 @@ export default function Home() {
                   key={game.id}
                   type="button"
                   style={cardStyle}
-                  onClick={() => setSelected(game)}
+                  onClick={() => openGame(game)}
                 >
                   <span className="card-rank">{String(rank).padStart(2, "0")}</span>
                   <span className="card-art" aria-hidden="true">
+                    <img className="card-cover" src={coverFor(game)} alt="" loading="lazy" />
                     <i className="card-horizon"><small>202 / M</small></i>
                     <b>{game.mark}</b>
                     <small>{game.year}</small>
@@ -254,7 +272,7 @@ export default function Home() {
                 type="button"
                 className="record-card"
                 key={game.id}
-                onClick={() => setSelected(game)}
+                onClick={() => openGame(game)}
                 style={{ "--record": game.color, "--record-dark": game.color2 } as StyleVars}
               >
                 <span className="record-number">0{index + 1}</span>
@@ -312,7 +330,7 @@ export default function Home() {
                   type="button"
                   key={game.id}
                   className={`dimension-game dimension-game-${index + 1}`}
-                  onClick={() => setSelected(game)}
+                  onClick={() => openGame(game)}
                   style={{ "--node": game.color } as StyleVars}
                 >
                   <i />
@@ -346,12 +364,40 @@ export default function Home() {
             aria-modal="true"
             aria-labelledby="detail-title"
             style={{ "--detail": selected.color, "--detail-dark": selected.color2 } as StyleVars}
+            tabIndex={-1}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") {
+                setGalleryIndex((index) => (index + selectedGallery.length - 1) % selectedGallery.length);
+              }
+              if (event.key === "ArrowRight") {
+                setGalleryIndex((index) => (index + 1) % selectedGallery.length);
+              }
+            }}
           >
             <button className="detail-close" type="button" onClick={() => setSelected(null)} aria-label="关闭档案">×</button>
             <div className="detail-art">
+              <img
+                className="detail-image"
+                src={selectedGallery[galleryIndex]}
+                alt={galleryIndex === 0 ? `${selected.title} 主视觉` : `${selected.title} 游戏内截图 ${galleryIndex}`}
+              />
               <span className="detail-grid" />
-              <b>{selected.mark}</b>
+              <b className="detail-mark">{selected.mark}</b>
               <small>ROOM 202 · PAGE {String(games.findIndex((game) => game.id === selected.id) + 1).padStart(2, "0")}</small>
+              <div className="detail-gallery" aria-label="游戏图片画廊">
+                {selectedGallery.map((image, index) => (
+                  <button
+                    type="button"
+                    className={galleryIndex === index ? "is-active" : ""}
+                    key={image}
+                    onClick={() => setGalleryIndex(index)}
+                    aria-label={index === 0 ? "查看游戏主视觉" : `查看游戏内截图 ${index}`}
+                  >
+                    <img src={image} alt="" />
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="detail-content">
               <div className="detail-head">
