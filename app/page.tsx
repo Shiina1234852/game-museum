@@ -420,8 +420,8 @@ export default function Home() {
                 </div>
               </div>
               <figure className="egg-mashiro-frame">
-                <img src="/mashiro-official.png" alt="《樱花庄的宠物女孩》动画官方椎名真白人物设定图" />
-                <figcaption>OFFICIAL CHARACTER SHEET · SHIINA MASHIRO</figcaption>
+                <img src="/mashiro-portrait.png" alt="《樱花庄的宠物女孩》椎名真白宣传插画" />
+                <figcaption>SHIINA MASHIRO · SAKURASOU NO PET NA KANOJO</figcaption>
               </figure>
             </div>
             <footer className="egg-pop-foot">
