@@ -22,12 +22,16 @@ const mashiroSparkles = Array.from({ length: 48 }, (_, index) => ({
 }));
 
 function posterFor(game: Game) {
-  if (game.id === "pragmata" || game.id === "re-requiem") return `/games/${game.id}/poster.webp`;
-  return `/games/${game.id}/poster.jpg`;
+  if (game.id === "pragmata" || game.id === "re-requiem") return assetUrl(`games/${game.id}/poster.webp`);
+  return assetUrl(`games/${game.id}/poster.jpg`);
 }
 
 function screenshotsFor(game: Game) {
-  return [1, 2, 3].map((index) => `/games/${game.id}/shot-${index}.jpg`);
+  return [1, 2, 3].map((index) => assetUrl(`games/${game.id}/shot-${index}.jpg`));
+}
+
+function assetUrl(path: string) {
+  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 }
 
 function lines(title: string) {
@@ -495,7 +499,7 @@ export default function Home() {
                 </div>
               </div>
               <figure className="egg-mashiro-frame">
-                <img src="/mashiro-portrait.png" alt="《樱花庄的宠物女孩》椎名真白宣传插画" />
+                <img src={assetUrl("mashiro-portrait.png")} alt="《樱花庄的宠物女孩》椎名真白宣传插画" />
                 <figcaption>SHIINA MASHIRO · SAKURASOU NO PET NA KANOJO</figcaption>
               </figure>
             </div>
