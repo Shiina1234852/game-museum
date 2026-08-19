@@ -240,14 +240,25 @@ export default function Home() {
                 "--card-accent": game.color,
                 "--card-dark": game.color2,
               } as StyleVars;
+              const isMasterpiece = game.tier === "一档";
               return (
                 <button
-                  className="game-card"
+                  className={`game-card${isMasterpiece ? " is-masterpiece" : ""}`}
                   key={game.id}
                   type="button"
                   style={cardStyle}
                   onClick={() => openGame(game)}
+                  onPointerMove={isMasterpiece ? handlePointer : undefined}
                 >
+                  {isMasterpiece && (
+                    <>
+                      <span className="masterpiece-frame" aria-hidden="true"><i /><i /><i /><i /></span>
+                      <span className="masterpiece-stars" aria-hidden="true">
+                        {Array.from({ length: 9 }, (_, index) => <i key={index} />)}
+                      </span>
+                      <span className="masterpiece-plaque"><small>ROOM 202 COLLECTION</small><b>MASTERPIECE</b></span>
+                    </>
+                  )}
                   <span className="card-rank">{String(rank).padStart(2, "0")}</span>
                   <span className="card-art" aria-hidden="true">
                     <img className="card-cover" src={posterFor(game)} alt="" loading="lazy" />
@@ -439,11 +450,11 @@ export default function Home() {
       )}
 
       {selected && (
-        <div className="detail-overlay" role="presentation" onMouseDown={(event) => {
+        <div className={`detail-overlay${selected.tier === "一档" ? " is-masterpiece" : ""}`} role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setSelected(null);
         }}>
           <article
-            className="detail-panel"
+            className={`detail-panel${selected.tier === "一档" ? " is-masterpiece" : ""}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="detail-title"
@@ -459,6 +470,11 @@ export default function Home() {
             }}
           >
             <button className="detail-close" type="button" onClick={() => setSelected(null)} aria-label="关闭档案">×</button>
+            {selected.tier === "一档" && (
+              <span className="detail-masterpiece-seal" aria-label="一档杰作馆藏">
+                <i>Ⅰ</i><span><small>ROOM 202</small><b>MASTERPIECE ARCHIVE</b></span>
+              </span>
+            )}
             <div className="detail-art">
               <a
                 className="detail-image-link"

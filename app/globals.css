@@ -229,10 +229,49 @@ a { color: inherit; text-decoration: none; }
 .result-line { display: flex; align-items: center; gap: 18px; margin: 34px 0 25px; color: #555652; font-size: 8px; letter-spacing: .18em; }
 .result-line i { flex: 1; height: 1px; background: rgba(255,255,255,.04); }
 .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.09); }
-.game-card { min-width: 0; min-height: 530px; padding: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); text-align: left; border: 0; background: #0b0c0d; cursor: pointer; }
+.game-card { min-width: 0; min-height: 530px; padding: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); text-align: left; border: 0; background: #0b0c0d; cursor: pointer; transition: transform .42s cubic-bezier(.16,.8,.2,1), box-shadow .42s ease, background .42s ease; }
 .game-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; border: 1px solid transparent; transition: .3s ease; }
 .game-card:hover::after, .game-card:focus-visible::after { border-color: color-mix(in srgb, var(--card-accent) 55%, transparent); }
 .game-card:focus-visible { outline: 1px solid var(--card-accent); outline-offset: -5px; }
+.game-card.is-masterpiece { isolation: isolate; background:
+  radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--card-accent) 13%, transparent), transparent 38%),
+  linear-gradient(165deg, #111317, #070809 70%);
+  box-shadow: inset 0 0 70px color-mix(in srgb, var(--card-accent) 5%, transparent);
+}
+.game-card.is-masterpiece::before { content: ""; position: absolute; z-index: 6; inset: 0; opacity: .18; pointer-events: none; mix-blend-mode: screen; background:
+  radial-gradient(230px circle at var(--mx, 50%) var(--my, 28%), color-mix(in srgb, var(--card-accent) 58%, white 18%), transparent 63%),
+  linear-gradient(112deg, transparent 18%, rgba(255,255,255,.07) 43%, color-mix(in srgb, var(--card-accent) 17%, transparent) 50%, transparent 64%);
+  transition: opacity .35s ease;
+}
+.game-card.is-masterpiece:hover, .game-card.is-masterpiece:focus-visible { z-index: 8; transform: translateY(-8px) scale(1.012); box-shadow: 0 24px 64px rgba(0,0,0,.58), 0 0 42px color-mix(in srgb, var(--card-accent) 19%, transparent), inset 0 0 80px color-mix(in srgb, var(--card-accent) 8%, transparent); }
+.game-card.is-masterpiece:hover::before, .game-card.is-masterpiece:focus-visible::before { opacity: .72; }
+.masterpiece-frame { position: absolute; z-index: 8; inset: 7px; pointer-events: none; border: 1px solid color-mix(in srgb, var(--card-accent) 54%, rgba(255,255,255,.34)); box-shadow: inset 0 0 24px rgba(255,255,255,.035), 0 0 18px color-mix(in srgb, var(--card-accent) 12%, transparent); }
+.masterpiece-frame::before { content: ""; position: absolute; left: 16%; right: 16%; top: -1px; height: 1px; background: linear-gradient(90deg, transparent, #fff, var(--card-accent), #fff, transparent); box-shadow: 0 0 14px var(--card-accent); }
+.masterpiece-frame i { position: absolute; width: 17px; height: 17px; border-color: color-mix(in srgb, var(--card-accent) 72%, white 24%); }
+.masterpiece-frame i:nth-child(1) { left: -3px; top: -3px; border-left: 2px solid; border-top: 2px solid; }
+.masterpiece-frame i:nth-child(2) { right: -3px; top: -3px; border-right: 2px solid; border-top: 2px solid; }
+.masterpiece-frame i:nth-child(3) { right: -3px; bottom: -3px; border-right: 2px solid; border-bottom: 2px solid; }
+.masterpiece-frame i:nth-child(4) { left: -3px; bottom: -3px; border-left: 2px solid; border-bottom: 2px solid; }
+.masterpiece-stars { position: absolute; z-index: 7; inset: 0; overflow: hidden; pointer-events: none; }
+.masterpiece-stars i { position: absolute; width: 3px; height: 3px; opacity: .58; border-radius: 50%; background: #fff; box-shadow: 0 0 6px #fff, 0 0 14px var(--card-accent); }
+.masterpiece-stars i:nth-child(1) { left: 18%; top: 12%; }
+.masterpiece-stars i:nth-child(2) { left: 72%; top: 9%; width: 2px; height: 2px; }
+.masterpiece-stars i:nth-child(3) { right: 13%; top: 28%; }
+.masterpiece-stars i:nth-child(4) { left: 11%; top: 46%; width: 2px; height: 2px; }
+.masterpiece-stars i:nth-child(5) { right: 21%; top: 53%; }
+.masterpiece-stars i:nth-child(6) { left: 34%; bottom: 28%; }
+.masterpiece-stars i:nth-child(7) { right: 8%; bottom: 18%; width: 2px; height: 2px; }
+.masterpiece-stars i:nth-child(8) { left: 8%; bottom: 11%; }
+.masterpiece-stars i:nth-child(9) { left: 66%; bottom: 8%; width: 2px; height: 2px; }
+.masterpiece-plaque { position: absolute; z-index: 9; right: 18px; top: 59px; padding: 8px 10px 7px; display: grid; gap: 3px; color: #f8f3e8; text-align: right; border-right: 2px solid var(--card-accent); background: linear-gradient(90deg, transparent, rgba(5,6,7,.78)); text-shadow: 0 2px 9px #000; pointer-events: none; }
+.masterpiece-plaque small { color: color-mix(in srgb, var(--card-accent) 76%, white 24%); font-size: 5px; letter-spacing: .19em; }
+.masterpiece-plaque b { font-family: var(--serif); font-size: 10px; font-weight: 400; letter-spacing: .16em; }
+.game-card.is-masterpiece .card-rank { color: #fff; border-color: color-mix(in srgb, var(--card-accent) 52%, white 25%); box-shadow: 0 0 18px color-mix(in srgb, var(--card-accent) 22%, transparent); }
+.game-card.is-masterpiece .card-art { border-bottom: 1px solid color-mix(in srgb, var(--card-accent) 28%, transparent); }
+.game-card.is-masterpiece .card-content { position: relative; z-index: 4; background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 4%, transparent), transparent 42%); }
+.game-card.is-masterpiece .card-topline em::before { content: "Ⅰ / "; color: rgba(255,255,255,.62); }
+.game-card.is-masterpiece .card-topline strong { color: color-mix(in srgb, var(--card-accent) 72%, white 28%); text-shadow: 0 0 18px color-mix(in srgb, var(--card-accent) 36%, transparent); }
+.game-card.is-masterpiece .card-open { color: #fff; background: linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 15%, #08090a), #08090a); }
 .card-rank { position: absolute; z-index: 4; top: 19px; left: 19px; width: 35px; height: 35px; display: grid; place-items: center; background: rgba(5,6,7,.76); border: 1px solid rgba(255,255,255,.14); font-family: var(--serif); font-size: 11px; backdrop-filter: blur(8px); }
 .card-art { height: 380px; overflow: hidden; position: relative; display: grid; place-items: center; background:
   radial-gradient(circle at 66% 30%, color-mix(in srgb, var(--card-accent) 85%, white 2%), transparent 9%),
@@ -533,6 +572,40 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
 .detail-content dt { color: #5d5e5a; }
 .detail-content dd { color: #aaa; margin: 0; }
 .detail-disclaimer { color: #51524f; font-size: 8px; letter-spacing: .07em; margin: 26px 0 0; }
+.detail-overlay.is-masterpiece { overflow: hidden; background:
+  radial-gradient(circle at 24% 28%, color-mix(in srgb, var(--detail) 18%, transparent), transparent 34%),
+  radial-gradient(circle at 78% 74%, color-mix(in srgb, var(--detail) 10%, transparent), transparent 31%),
+  rgba(1,2,3,.88);
+  backdrop-filter: blur(24px) saturate(1.2);
+}
+.detail-overlay.is-masterpiece::before { content: ""; position: absolute; inset: -50vmax; opacity: .13; pointer-events: none; background: repeating-conic-gradient(from 0deg, transparent 0 9deg, color-mix(in srgb, var(--detail) 75%, white 20%) 10deg 10.5deg, transparent 11deg 22deg); mask-image: radial-gradient(circle, transparent 0 9%, black 17%, transparent 54%); }
+.detail-overlay.is-masterpiece::after { content: "Ⅰ"; position: absolute; right: 3vw; bottom: -12vh; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--detail) 18%, transparent); font-family: var(--serif); font-size: min(48vw, 620px); line-height: 1; pointer-events: none; }
+.detail-panel.is-masterpiece { isolation: isolate; border-color: color-mix(in srgb, var(--detail) 62%, rgba(255,255,255,.48)); box-shadow: 0 42px 130px rgba(0,0,0,.76), 0 0 70px color-mix(in srgb, var(--detail) 18%, transparent), inset 0 0 0 6px rgba(255,255,255,.025); }
+.detail-panel.is-masterpiece::before { content: ""; position: absolute; z-index: 7; inset: 8px; pointer-events: none; background:
+  linear-gradient(var(--detail), var(--detail)) left top / 42px 1px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) left top / 1px 42px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) right top / 42px 1px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) right top / 1px 42px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) right bottom / 42px 1px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) right bottom / 1px 42px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) left bottom / 42px 1px no-repeat,
+  linear-gradient(var(--detail), var(--detail)) left bottom / 1px 42px no-repeat;
+  filter: drop-shadow(0 0 7px var(--detail));
+}
+.detail-panel.is-masterpiece::after { content: ""; position: absolute; z-index: 6; inset: -70% -40%; opacity: .18; pointer-events: none; mix-blend-mode: screen; background: linear-gradient(110deg, transparent 43%, #fff 49%, var(--detail) 50%, #fff 51%, transparent 57%); transform: translateX(-55%); }
+.detail-masterpiece-seal { position: absolute; z-index: 9; top: 17px; right: 68px; min-width: 210px; height: 39px; padding: 0 13px 0 7px; display: flex; align-items: center; gap: 9px; color: #fff; border: 1px solid color-mix(in srgb, var(--detail) 48%, rgba(255,255,255,.36)); background: rgba(4,5,6,.72); box-shadow: 0 0 24px color-mix(in srgb, var(--detail) 13%, transparent); backdrop-filter: blur(12px); pointer-events: none; }
+.detail-masterpiece-seal > i { width: 27px; height: 27px; display: grid; place-items: center; color: var(--detail); border: 1px solid var(--detail); border-radius: 50%; box-shadow: 0 0 12px color-mix(in srgb, var(--detail) 34%, transparent); font-family: var(--serif); font-style: normal; font-size: 14px; }
+.detail-masterpiece-seal > span { display: grid; gap: 3px; }
+.detail-masterpiece-seal small { color: color-mix(in srgb, var(--detail) 78%, white 22%); font-size: 5px; letter-spacing: .18em; }
+.detail-masterpiece-seal b { font-family: var(--serif); font-size: 9px; font-weight: 400; letter-spacing: .13em; }
+.detail-panel.is-masterpiece .detail-content { background:
+  radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--detail) 11%, transparent), transparent 31%),
+  #0c0d0e;
+}
+.detail-panel.is-masterpiece .detail-head { border-color: color-mix(in srgb, var(--detail) 28%, transparent); }
+.detail-panel.is-masterpiece .detail-head b { color: color-mix(in srgb, var(--detail) 72%, white 28%); text-shadow: 0 0 24px color-mix(in srgb, var(--detail) 46%, transparent); }
+.detail-panel.is-masterpiece .detail-record { box-shadow: inset 0 0 30px color-mix(in srgb, var(--detail) 5%, transparent); }
+.detail-panel.is-masterpiece .detail-gallery button.is-active { box-shadow: 0 0 14px color-mix(in srgb, var(--detail) 42%, transparent); }
 
 @keyframes overlay-in { from { opacity: 0; } }
 @keyframes panel-in { from { opacity: 0; transform: translateY(22px) scale(.98); } }
@@ -609,6 +682,8 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .result-line { margin-top: 25px; }
   .game-grid { grid-template-columns: 1fr; }
   .game-card { min-height: 510px; }
+  .game-card.is-masterpiece:hover, .game-card.is-masterpiece:focus-visible { transform: translateY(-4px); }
+  .masterpiece-plaque { top: 59px; right: 16px; }
   .card-art { height: 420px; }
   .card-art b { font-size: 94px; }
   .record-stage { grid-template-columns: 1fr; margin-top: 38px; }
@@ -646,6 +721,9 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .detail-head b { font-size: 38px; }
   .detail-content h2 { font-size: 38px; }
   .detail-note { font-size: 13px; margin-block: 24px; }
+  .detail-masterpiece-seal { top: 12px; right: 58px; min-width: 0; width: 172px; height: 35px; padding-right: 8px; }
+  .detail-masterpiece-seal > i { width: 23px; height: 23px; font-size: 12px; }
+  .detail-masterpiece-seal b { font-size: 7px; letter-spacing: .09em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -659,11 +737,21 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .pulse-on .closing-orb::before { animation: orbit-pulse 3.8s ease-in-out infinite; }
   .pulse-on .closing-orb::after { animation: orbit-pulse 3.8s ease-in-out 1s infinite; }
   .pulse-on .radar-rings i:nth-child(3) { animation: core-pulse 2.6s ease-in-out infinite; }
+  .game-card.is-masterpiece .masterpiece-frame::before { animation: masterpiece-edge 3.8s ease-in-out infinite; }
+  .game-card.is-masterpiece .masterpiece-stars i { animation: masterpiece-star 2.4s ease-in-out infinite alternate; }
+  .game-card.is-masterpiece .masterpiece-stars i:nth-child(2n) { animation-delay: -.8s; }
+  .game-card.is-masterpiece .masterpiece-stars i:nth-child(3n) { animation-delay: -1.5s; }
+  .detail-overlay.is-masterpiece::before { animation: masterpiece-rays 28s linear infinite; }
+  .detail-panel.is-masterpiece::after { animation: masterpiece-sweep 5.6s ease-in-out infinite; }
   @keyframes drift-one { to { transform: rotate(-8deg) scaleY(.74); } }
   @keyframes drift-two { to { transform: rotate(32deg) scaleY(.59); } }
   @keyframes blink { 50% { opacity: .12; transform: scale(.3); } }
   @keyframes orbit-pulse { 50% { transform: scale(1.08); opacity: .4; } }
   @keyframes core-pulse { 50% { transform: scale(2); opacity: .45; } }
+  @keyframes masterpiece-edge { 50% { opacity: .34; transform: scaleX(.42); } }
+  @keyframes masterpiece-star { to { opacity: .14; transform: scale(.35); } }
+  @keyframes masterpiece-rays { to { transform: rotate(360deg); } }
+  @keyframes masterpiece-sweep { 0%, 48% { transform: translateX(-55%); } 72%, 100% { transform: translateX(55%); } }
 }
 
 @media (max-width: 900px) {
