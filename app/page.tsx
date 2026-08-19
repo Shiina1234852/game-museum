@@ -10,8 +10,8 @@ const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
 const tierShelves = [
   { tier: "一档", roman: "Ⅰ", title: "核心馆藏", english: "MASTERPIECE COLLECTION", note: "真正定义我审美与偏好的作品" },
-  { tier: "二档", roman: "Ⅱ", title: "重点展区", english: "FEATURED ARCHIVE", note: "完成度突出、愿意长期推荐的作品" },
-  { tier: "三档", roman: "Ⅲ", title: "记忆索引", english: "FIELD NOTES", note: "留下明确记忆，但仍有遗憾的作品" },
+  { tier: "二档", roman: "Ⅱ", title: "喜爱之作", english: "BELOVED SELECTION", note: "很喜欢，也愿意一次次向别人聊起的游戏" },
+  { tier: "三档", roman: "Ⅲ", title: "游玩手记", english: "PLAYED & REMEMBERED", note: "它们共同拼成了这段完整而鲜活的游玩轨迹" },
 ] as const;
 const mashiroSparkles = Array.from({ length: 48 }, (_, index) => ({
   x: (index * 37 + 11) % 100,
@@ -293,7 +293,7 @@ export default function Home() {
                             </>
                           ) : (
                             <span className="tier-card-plaque">
-                              <small>{game.tier === "二档" ? "FEATURED ARCHIVE" : "FIELD NOTE"}</small>
+                              <small>{game.tier === "二档" ? "BELOVED SELECTION" : "MEMORY COLLECTION"}</small>
                               <b>{game.tier === "二档" ? "Ⅱ" : "Ⅲ"}</b>
                             </span>
                           )}
@@ -520,7 +520,7 @@ export default function Home() {
             {selected.tier !== "一档" && (
               <span className="detail-tier-seal" aria-label={`${selected.tier}游戏档案`}>
                 <i>{selected.tier === "二档" ? "Ⅱ" : "Ⅲ"}</i>
-                <span><small>ROOM 202</small><b>{selected.tier === "二档" ? "FEATURED ARCHIVE" : "FIELD NOTE"}</b></span>
+                <span><small>ROOM 202</small><b>{selected.tier === "二档" ? "BELOVED SELECTION" : "MEMORY COLLECTION"}</b></span>
               </span>
             )}
             <div className="detail-art">
