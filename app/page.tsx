@@ -8,6 +8,11 @@ type StyleVars = CSSProperties & Record<`--${string}`, string>;
 
 const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
+const tierShelves = [
+  { tier: "一档", roman: "Ⅰ", title: "核心馆藏", english: "MASTERPIECE COLLECTION", note: "真正定义我审美与偏好的作品" },
+  { tier: "二档", roman: "Ⅱ", title: "重点展区", english: "FEATURED ARCHIVE", note: "完成度突出、愿意长期推荐的作品" },
+  { tier: "三档", roman: "Ⅲ", title: "记忆索引", english: "FIELD NOTES", note: "留下明确记忆，但仍有遗憾的作品" },
+] as const;
 const mashiroSparkles = Array.from({ length: 48 }, (_, index) => ({
   x: (index * 37 + 11) % 100,
   y: (index * 61 + 7) % 100,
@@ -28,6 +33,12 @@ function screenshotsFor(game: Game) {
 function lines(title: string) {
   const parts = title.split(/[:：]/);
   return parts.length > 1 ? [`${parts[0]}：`, parts.slice(1).join("：")] : [title];
+}
+
+function tierClass(tier: Game["tier"]) {
+  if (tier === "一档") return "is-masterpiece";
+  if (tier === "二档") return "is-featured";
+  return "is-field-note";
 }
 
 export default function Home() {
@@ -233,47 +244,78 @@ export default function Home() {
         </div>
 
         {visibleGames.length > 0 ? (
-          <div className="game-grid">
-            {visibleGames.map((game) => {
-              const rank = games.findIndex((item) => item.id === game.id) + 1;
-              const cardStyle = {
-                "--card-accent": game.color,
-                "--card-dark": game.color2,
-              } as StyleVars;
-              const isMasterpiece = game.tier === "一档";
+          <div className="tier-shelves">
+            {tierShelves.map((shelf) => {
+              const shelfGames = visibleGames.filter((game) => game.tier === shelf.tier);
+              if (shelfGames.length === 0) return null;
               return (
-                <button
-                  className={`game-card${isMasterpiece ? " is-masterpiece" : ""}`}
-                  key={game.id}
-                  type="button"
-                  style={cardStyle}
-                  onClick={() => openGame(game)}
-                  onPointerMove={isMasterpiece ? handlePointer : undefined}
-                >
-                  {isMasterpiece && (
-                    <>
-                      <span className="masterpiece-frame" aria-hidden="true"><i /><i /><i /><i /></span>
-                      <span className="masterpiece-stars" aria-hidden="true">
-                        {Array.from({ length: 9 }, (_, index) => <i key={index} />)}
-                      </span>
-                      <span className="masterpiece-plaque"><small>ROOM 202 COLLECTION</small><b>MASTERPIECE</b></span>
-                    </>
+                <section className={`tier-shelf tier-shelf-${shelf.tier === "一档" ? "one" : shelf.tier === "二档" ? "two" : "three"}`} key={shelf.tier}>
+                  <header className="tier-shelf-head">
+                    <span className="tier-roman" aria-hidden="true">{shelf.roman}</span>
+                    <div>
+                      <small>{shelf.english}</small>
+                      <h3>{shelf.title}</h3>
+                      <p>{shelf.note}</p>
+                    </div>
+                    <b>{String(shelfGames.length).padStart(2, "0")}<small> WORKS</small></b>
+                  </header>
+                  {shelf.tier === "一档" && (
+                    <div className="masterpiece-manifesto">
+                      <span>THE DEFINITIVE FIVE</span>
+                      <p>它们不是简单的高分游戏，而是整座私人博物馆的中心坐标。</p>
+                      <i>ROOM 202 · PERMANENT COLLECTION</i>
+                    </div>
                   )}
-                  <span className="card-rank">{String(rank).padStart(2, "0")}</span>
-                  <span className="card-art" aria-hidden="true">
-                    <img className="card-cover" src={posterFor(game)} alt="" loading="lazy" />
-                    <i className="card-horizon"><small>202 / M</small></i>
-                    <b>{game.mark}</b>
-                    <small>{game.year}</small>
-                  </span>
-                  <span className="card-content">
-                    <span className="card-topline"><em>{game.tier}</em><strong>{game.score.toFixed(1)}</strong></span>
-                    <span className="card-title">{game.title}</span>
-                    <span className="card-subtitle">{game.subtitle}</span>
-                    <span className="card-tags">{game.tags.map((tag) => <i key={tag}>{tag}</i>)}</span>
-                  </span>
-                  <span className="card-open">TURN THE PAGE <i>↗</i></span>
-                </button>
+                  <div className="game-grid">
+                    {shelfGames.map((game) => {
+                      const rank = games.findIndex((item) => item.id === game.id) + 1;
+                      const cardStyle = {
+                        "--card-accent": game.color,
+                        "--card-dark": game.color2,
+                      } as StyleVars;
+                      const isMasterpiece = game.tier === "一档";
+                      return (
+                        <button
+                          className={`game-card ${tierClass(game.tier)}`}
+                          key={game.id}
+                          type="button"
+                          style={cardStyle}
+                          onClick={() => openGame(game)}
+                          onPointerMove={isMasterpiece ? handlePointer : undefined}
+                        >
+                          {isMasterpiece ? (
+                            <>
+                              <span className="masterpiece-frame" aria-hidden="true"><i /><i /><i /><i /></span>
+                              <span className="masterpiece-stars" aria-hidden="true">
+                                {Array.from({ length: 9 }, (_, index) => <i key={index} />)}
+                              </span>
+                              <span className="masterpiece-plaque"><small>ROOM 202 COLLECTION</small><b>MASTERPIECE</b></span>
+                            </>
+                          ) : (
+                            <span className="tier-card-plaque">
+                              <small>{game.tier === "二档" ? "FEATURED ARCHIVE" : "FIELD NOTE"}</small>
+                              <b>{game.tier === "二档" ? "Ⅱ" : "Ⅲ"}</b>
+                            </span>
+                          )}
+                          <span className="card-rank">{String(rank).padStart(2, "0")}</span>
+                          <span className="card-art" aria-hidden="true">
+                            <img className="card-cover" src={posterFor(game)} alt="" loading="lazy" />
+                            <i className="card-horizon"><small>202 / M</small></i>
+                            <b>{game.mark}</b>
+                            <small>{game.year}</small>
+                          </span>
+                          <span className="card-content">
+                            <span className="card-topline"><em>{game.tier}</em><strong>{game.score.toFixed(1)}</strong></span>
+                            <span className="card-title">{game.title}</span>
+                            <span className="card-subtitle">{game.subtitle}</span>
+                            <span className="card-tags">{game.tags.map((tag) => <i key={tag}>{tag}</i>)}</span>
+                          </span>
+                          <span className="card-open">TURN THE PAGE <i>↗</i></span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
               );
             })}
           </div>
@@ -450,11 +492,11 @@ export default function Home() {
       )}
 
       {selected && (
-        <div className={`detail-overlay${selected.tier === "一档" ? " is-masterpiece" : ""}`} role="presentation" onMouseDown={(event) => {
+        <div className={`detail-overlay ${tierClass(selected.tier)}`} role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setSelected(null);
         }}>
           <article
-            className={`detail-panel${selected.tier === "一档" ? " is-masterpiece" : ""}`}
+            className={`detail-panel ${tierClass(selected.tier)}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="detail-title"
@@ -473,6 +515,12 @@ export default function Home() {
             {selected.tier === "一档" && (
               <span className="detail-masterpiece-seal" aria-label="一档杰作馆藏">
                 <i>Ⅰ</i><span><small>ROOM 202</small><b>MASTERPIECE ARCHIVE</b></span>
+              </span>
+            )}
+            {selected.tier !== "一档" && (
+              <span className="detail-tier-seal" aria-label={`${selected.tier}游戏档案`}>
+                <i>{selected.tier === "二档" ? "Ⅱ" : "Ⅲ"}</i>
+                <span><small>ROOM 202</small><b>{selected.tier === "二档" ? "FEATURED ARCHIVE" : "FIELD NOTE"}</b></span>
               </span>
             )}
             <div className="detail-art">
