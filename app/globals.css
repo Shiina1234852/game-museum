@@ -1396,3 +1396,29 @@ footer { background: #292a27; color: #aaa9a2; border: 0; }
 @media (max-width: 780px) {
   .exhibition-legend { gap: 1px; }
 }
+
+/* Smoked stone base — no white canvas */
+html, body { background: #aaaea7; }
+.museum-shell { background:
+  radial-gradient(circle at 7% 9%, rgba(125,48,65,.17), transparent 29%),
+  radial-gradient(circle at 91% 17%, rgba(15,97,94,.16), transparent 27%),
+  radial-gradient(circle at 54% 73%, rgba(180,147,85,.1), transparent 34%),
+  linear-gradient(145deg, #c5c7c0 0%, #adb1aa 52%, #b9bbb4 100%);
+}
+.ambient-grid { opacity: .48; background-image:
+  linear-gradient(rgba(32,35,32,.055) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(32,35,32,.055) 1px, transparent 1px),
+  radial-gradient(circle, rgba(125,48,65,.12) 0 1px, transparent 1.3px);
+}
+.topbar { background: linear-gradient(180deg, rgba(218,219,213,.96), rgba(202,204,197,.9)); box-shadow: 0 10px 30px rgba(31,34,31,.09); }
+.curator-card { box-shadow: 14px 14px 0 rgba(125,48,65,.16), 0 24px 55px rgba(22,51,48,.2); }
+.exhibition-legend { box-shadow: 0 20px 48px rgba(31,34,31,.15); }
+.archive-search { background: rgba(218,220,214,.42); padding-inline: 14px; }
+.sort-button { background: rgba(220,221,215,.62); }
+.tier-shelf-one { background: radial-gradient(circle at 50% 0%, rgba(125,48,65,.14), transparent 50%), rgba(215,216,210,.48); }
+.game-card { background: #e5e6e0; }
+.game-card.is-masterpiece { background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--card-accent) 8%, #e9e8e2), transparent 42%), linear-gradient(165deg, #ecebe5, #d9dad4 74%); }
+.game-card.is-featured { background: linear-gradient(160deg, #e5e8e3, #cedbd6 72%); }
+.game-card.is-field-note { background: linear-gradient(160deg, #e8e5e5, #d8ced6 72%); }
+.profile-board { background: rgba(215,217,210,.66); }
+.empty-state { background: rgba(215,217,210,.48); }
