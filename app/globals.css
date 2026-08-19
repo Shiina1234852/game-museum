@@ -430,6 +430,70 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
 @keyframes egg-shimmer { to { background-position: -220% 0; } }
 @keyframes egg-marquee { to { transform: translateX(-50%); } }
 
+/* Bright anime-pop reveal: intentionally unlike the dark museum */
+.mashiro-egg { padding: 42px 34px 62px; color: #493c51; background: #fffaf7; font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif; animation: egg-pop-reveal .72s cubic-bezier(.12,.82,.2,1) both; }
+.mashiro-egg::before { inset: -10%; opacity: 1; background:
+  radial-gradient(circle at 16% 18%, rgba(255,104,167,.34) 0 11%, transparent 11.5%),
+  radial-gradient(circle at 84% 16%, rgba(87,210,255,.32) 0 13%, transparent 13.5%),
+  radial-gradient(circle at 76% 82%, rgba(255,213,83,.34) 0 12%, transparent 12.5%),
+  linear-gradient(128deg, #fffdf6 0 39%, #fff0f7 39% 59%, #edfbff 59% 78%, #fff8d7 78%);
+  animation: egg-paper-breathe 7s ease-in-out infinite alternate;
+}
+.mashiro-egg::after { z-index: -1; opacity: .44; background-image: radial-gradient(#f59abe 1px, transparent 1px); background-size: 17px 17px; mask-image: linear-gradient(90deg, black, transparent 30%, transparent 70%, black); }
+.egg-close { top: 21px; right: 23px; width: 48px; height: 48px; color: #ff4d9d; border: 2px solid #ff4d9d; background: #fff; box-shadow: 5px 5px 0 #ffd858; backdrop-filter: none; font-weight: 800; }
+.egg-close:hover, .egg-close:focus-visible { color: #fff; border-color: #ff4d9d; background: #ff4d9d; box-shadow: 2px 2px 0 #52d8f8; }
+.egg-paper-noise { position: absolute; inset: 0; opacity: .2; pointer-events: none; background-image: repeating-linear-gradient(0deg, rgba(123,76,100,.08) 0 1px, transparent 1px 5px); mix-blend-mode: multiply; }
+.egg-color-sheets { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.egg-color-sheets i { position: absolute; width: 34vw; height: 120vh; opacity: .72; transform: rotate(27deg); animation: egg-sheet-in .9s cubic-bezier(.15,.8,.2,1) both; }
+.egg-color-sheets i:nth-child(1) { left: -20vw; top: -18vh; background: #ff70ae; animation-delay: .05s; }
+.egg-color-sheets i:nth-child(2) { right: -22vw; top: -13vh; background: #63ddfa; transform: rotate(-24deg); animation-delay: .12s; }
+.egg-color-sheets i:nth-child(3) { left: 40vw; bottom: -106vh; background: #ffe064; transform: rotate(78deg); animation-delay: .2s; }
+.egg-doodles { position: absolute; inset: 0; pointer-events: none; color: #ff4d9d; font-weight: 900; }
+.egg-doodles i { position: absolute; font-style: normal; opacity: 0; animation: egg-doodle-pop .58s cubic-bezier(.12,.82,.22,1.2) both; }
+.egg-doodles i:nth-child(1) { left: 7%; top: 9%; font-size: 34px; animation-delay: .42s; }
+.egg-doodles i:nth-child(2) { left: 17%; bottom: 10%; color: #34c9ed; font-size: 48px; transform: rotate(-14deg); animation-delay: .5s; }
+.egg-doodles i:nth-child(3) { right: 8%; top: 16%; color: #e8b900; font-size: 20px; transform: rotate(12deg); animation-delay: .58s; }
+.egg-doodles i:nth-child(4) { right: 4%; bottom: 12%; font-size: 38px; animation-delay: .66s; }
+.egg-doodles i:nth-child(5) { left: 5%; top: 48%; color: #29bedd; font-size: 25px; animation-delay: .74s; }
+.egg-doodles i:nth-child(6) { right: 12%; top: 52%; color: #efb800; font-size: 19px; transform: rotate(-18deg); animation-delay: .82s; }
+.egg-doodles i:nth-child(7) { left: 29%; top: 4%; font-size: 22px; animation-delay: .9s; }
+.egg-doodles i:nth-child(8) { right: 29%; bottom: 4%; color: #28c6e6; font-size: 31px; animation-delay: .98s; }
+.egg-doodles i:nth-child(9) { left: 42%; bottom: 2%; color: #dcae00; font-size: 16px; animation-delay: 1.06s; }
+.egg-sparkles { z-index: 1; }
+.egg-sparkles i { width: calc(var(--size) * 1.7); height: calc(var(--size) * 5.5); border-radius: 2px; color: hsl(var(--hue) 88% 64%); background: currentColor; box-shadow: none; transform: rotate(calc(var(--x) * .7)); animation: egg-confetti-in 1.25s cubic-bezier(.1,.75,.2,1) var(--delay) both, egg-confetti-float 2.8s ease-in-out calc(var(--delay) + 1.2s) infinite alternate; }
+.egg-pop-card { position: relative; z-index: 5; width: min(1180px, calc(100vw - 84px)); max-height: calc(100svh - 104px); overflow: auto; border: 3px solid #ff4d9d; border-radius: 4px; background: #fffefb; box-shadow: 12px 12px 0 #ffcf48, 21px 21px 0 #66dff8, 0 34px 90px rgba(147,72,105,.2); transform: rotate(-.45deg); animation: egg-magazine-in .82s cubic-bezier(.12,.85,.24,1) .16s both; }
+.egg-pop-head { width: 100%; height: auto; margin: 0; padding: 17px 24px; position: relative; z-index: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; color: #ff388e; border: 0; border-bottom: 2px solid #ff80b5; background: #fff2f8; font-size: 9px; font-weight: 800; letter-spacing: .18em; text-align: left; }
+.egg-pop-head b { padding: 7px 12px; color: #fff; border-radius: 99px; background: #ff4d9d; font-size: 9px; letter-spacing: .14em; transform: rotate(2deg); }
+.egg-pop-layout { display: grid; grid-template-columns: .66fr 1.34fr; align-items: center; gap: 24px; padding: 42px 34px 30px; }
+.egg-pop-copy { position: relative; z-index: 3; padding: 18px 0 18px 14px; }
+.egg-pop-copy > p:first-child { display: inline-block; margin: 0 0 24px; padding: 7px 10px; color: #473643; background: #ffe568; box-shadow: 4px 4px 0 #ff76ad; font-size: 9px; font-weight: 900; letter-spacing: .14em; transform: rotate(-2deg); }
+.egg-pop-copy h2 { margin: 0; display: grid; gap: 1px; font-weight: 900; line-height: .84; letter-spacing: -.08em; }
+.egg-pop-copy h2 span { color: #372e38; font-size: clamp(44px, 5vw, 72px); }
+.egg-pop-copy h2 strong { color: #ff4d9d; font-size: clamp(66px, 8vw, 116px); font-weight: 900; text-shadow: 4px 4px 0 #ffe368, 8px 8px 0 #66dff8; }
+.egg-pop-note { margin: 32px 0 25px; color: #6f5d69; font-size: 13px; font-weight: 650; line-height: 1.85; }
+.egg-pop-stickers { display: flex; flex-wrap: wrap; gap: 9px; }
+.egg-pop-stickers span { padding: 7px 10px; color: #fff; border-radius: 99px; background: #ff6da8; font-size: 8px; font-weight: 800; letter-spacing: .08em; }
+.egg-pop-stickers span:nth-child(2) { color: #4b3b24; background: #ffd859; transform: rotate(-2deg); }
+.egg-pop-stickers span:nth-child(3) { background: #48cde8; transform: rotate(2deg); }
+.egg-mashiro-frame { min-width: 0; margin: 0; padding: 13px 13px 9px; position: relative; border: 2px solid #ff76ad; background: #fff; box-shadow: 8px 8px 0 rgba(255,104,163,.22); transform: rotate(.8deg); animation: egg-character-in .9s cubic-bezier(.12,.84,.24,1) .5s both; }
+.egg-mashiro-frame::before { content: "PHOTO / 202"; position: absolute; z-index: 2; right: -13px; top: -17px; padding: 7px 11px; color: #fff; background: #3fcbe8; box-shadow: 3px 3px 0 #ffe268; font-size: 8px; font-weight: 900; letter-spacing: .13em; transform: rotate(4deg); }
+.egg-mashiro-frame img { display: block; width: 100%; height: auto; max-height: 56svh; object-fit: contain; background: #fff; }
+.egg-mashiro-frame figcaption { padding: 9px 4px 2px; color: #aa718b; font-size: 7px; font-weight: 700; letter-spacing: .16em; }
+.egg-pop-foot { width: 100%; height: auto; margin: 0; padding: 14px 22px 16px; position: relative; z-index: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; color: #917180; border: 0; border-top: 1px dashed #f6a3c4; background: #fff9e9; font-size: 7px; letter-spacing: .05em; text-align: left; }
+.egg-exit { margin: 0; padding: 9px 13px; gap: 17px; color: #fff; border: 0; border-radius: 3px; background: #ff4d9d; box-shadow: 4px 4px 0 #5ed8f2; font-weight: 800; animation: none; }
+.egg-exit:hover, .egg-exit:focus-visible { gap: 24px; color: #fff; border: 0; background: #e93483; box-shadow: 2px 2px 0 #ffd859; text-shadow: none; transform: translate(2px,2px); }
+.egg-exit span { color: #ffe26b; }
+.egg-marquee { left: 0; right: auto; bottom: 14px; z-index: 7; padding: 8px 0; color: #fff; background: #ff4d9d; box-shadow: 0 -4px 0 #ffe263, 0 4px 0 #5ddbf5; font-size: 8px; font-weight: 900; letter-spacing: .2em; animation: egg-marquee 18s linear infinite; }
+
+@keyframes egg-pop-reveal { from { opacity: 0; filter: brightness(1.7); } }
+@keyframes egg-paper-breathe { to { transform: scale(1.04) rotate(.5deg); } }
+@keyframes egg-sheet-in { from { opacity: 0; transform: translateX(-35vw) rotate(27deg); } }
+@keyframes egg-doodle-pop { from { opacity: 0; transform: scale(0) rotate(-25deg); } to { opacity: .72; } }
+@keyframes egg-confetti-in { from { opacity: 0; transform: translateY(-35vh) rotate(0); } to { opacity: .8; transform: translateY(0) rotate(240deg); } }
+@keyframes egg-confetti-float { to { transform: translate(10px, 14px) rotate(280deg); } }
+@keyframes egg-magazine-in { from { opacity: 0; transform: translateY(50px) scale(.84) rotate(2.5deg); } 75% { transform: translateY(-5px) scale(1.015) rotate(-.7deg); } }
+@keyframes egg-character-in { from { opacity: 0; transform: translateX(70px) rotate(4deg); filter: blur(7px); } }
+
 /* Game detail */
 .detail-overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 28px; background: rgba(2,3,3,.76); backdrop-filter: blur(18px); animation: overlay-in .25s ease both; }
 .detail-panel { width: min(1320px, 96vw); max-height: min(860px, 94svh); overflow: auto; display: grid; grid-template-columns: 1.35fr .8fr; position: relative; background: #0c0d0e; border: 1px solid rgba(255,255,255,.17); box-shadow: 0 40px 120px rgba(0,0,0,.7); animation: panel-in .35s cubic-bezier(.18,.85,.28,1) both; }
@@ -600,4 +664,39 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   @keyframes blink { 50% { opacity: .12; transform: scale(.3); } }
   @keyframes orbit-pulse { 50% { transform: scale(1.08); opacity: .4; } }
   @keyframes core-pulse { 50% { transform: scale(2); opacity: .45; } }
+}
+
+@media (max-width: 900px) {
+  .mashiro-egg { padding: 54px 24px 70px; }
+  .egg-pop-card { width: min(720px, calc(100vw - 48px)); max-height: calc(100svh - 126px); }
+  .egg-pop-layout { grid-template-columns: 1fr; gap: 22px; padding: 26px 24px 24px; }
+  .egg-pop-copy { padding: 8px 5px 0; display: grid; grid-template-columns: 1fr auto; align-items: end; column-gap: 20px; }
+  .egg-pop-copy > p:first-child { grid-column: 1 / -1; justify-self: start; margin-bottom: 18px; }
+  .egg-pop-copy h2 { grid-column: 1; }
+  .egg-pop-note { grid-column: 2; grid-row: 2; margin: 0; font-size: 11px; }
+  .egg-pop-stickers { grid-column: 1 / -1; margin-top: 18px; }
+  .egg-mashiro-frame img { max-height: 46svh; }
+}
+
+@media (max-width: 620px) {
+  .mashiro-egg { padding: 55px 12px 59px; }
+  .egg-close { top: 10px; right: 12px; width: 40px; height: 40px; }
+  .egg-pop-card { width: calc(100vw - 30px); max-height: calc(100svh - 112px); box-shadow: 6px 6px 0 #ffcf48, 11px 11px 0 #66dff8; transform: none; }
+  .egg-pop-head { padding: 11px 12px; font-size: 7px; }
+  .egg-pop-head b { padding: 5px 7px; font-size: 7px; }
+  .egg-pop-layout { padding: 20px 12px 17px; gap: 17px; }
+  .egg-pop-copy { display: block; padding: 4px 3px 0; }
+  .egg-pop-copy > p:first-child { margin-bottom: 15px; font-size: 7px; }
+  .egg-pop-copy h2 { display: flex; align-items: baseline; gap: 9px; }
+  .egg-pop-copy h2 span { font-size: 35px; }
+  .egg-pop-copy h2 strong { font-size: clamp(58px, 18vw, 78px); text-shadow: 3px 3px 0 #ffe368, 6px 6px 0 #66dff8; }
+  .egg-pop-note { margin: 22px 0 16px; font-size: 11px; }
+  .egg-pop-stickers span { padding: 6px 8px; font-size: 7px; }
+  .egg-mashiro-frame { padding: 7px 7px 5px; box-shadow: 5px 5px 0 rgba(255,104,163,.22); }
+  .egg-mashiro-frame img { max-height: none; }
+  .egg-mashiro-frame figcaption { font-size: 6px; letter-spacing: .08em; }
+  .egg-pop-foot { padding: 10px 11px 12px; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .egg-pop-foot small { font-size: 6px; }
+  .egg-exit { align-self: flex-end; }
+  .egg-marquee { bottom: 8px; padding: 6px 0; font-size: 7px; }
 }

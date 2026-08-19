@@ -384,10 +384,10 @@ export default function Home() {
           }}
         >
           <button className="egg-close" type="button" onClick={() => setMashiroEgg(false)} aria-label="关闭椎名真白彩蛋">×</button>
-          <div className="egg-aurora" aria-hidden="true"><i /><i /><i /><i /></div>
-          <div className="egg-rays" aria-hidden="true" />
-          <div className="egg-ribbons" aria-hidden="true">
-            {Array.from({ length: 7 }, (_, index) => <i key={index} />)}
+          <div className="egg-paper-noise" aria-hidden="true" />
+          <div className="egg-color-sheets" aria-hidden="true"><i /><i /><i /></div>
+          <div className="egg-doodles" aria-hidden="true">
+            {Array.from({ length: 9 }, (_, index) => <i key={index}>{index % 3 === 0 ? "✦" : index % 3 === 1 ? "♡" : "ねこ"}</i>)}
           </div>
           <div className="egg-sparkles" aria-hidden="true">
             {mashiroSparkles.map((sparkle, index) => (
@@ -403,28 +403,37 @@ export default function Home() {
               />
             ))}
           </div>
-          <div className="egg-orbits" aria-hidden="true">
-            <i><span>猫</span></i>
-            <i><span>202</span></i>
-            <i><span>BAUM</span></i>
-          </div>
-          <section className="egg-canvas">
-            <p className="egg-kicker">SECRET CANVAS FOUND · ROOM 202</p>
-            <div className="egg-glyph" aria-hidden="true">ま</div>
-            <h2 id="mashiro-egg-title"><span>椎名</span><strong>真白</strong></h2>
-            <p className="egg-copy">你找到了藏在游戏宇宙边缘的白色画布。</p>
-            <div className="egg-tokens" aria-label="彩蛋暗号">
-              <span>白色画布</span><i />
-              <span>猫的脚印</span><i />
-              <span>年轮蛋糕</span>
+          <section className="egg-pop-card">
+            <header className="egg-pop-head">
+              <span>SAKURASOU / SPECIAL PAGE</span>
+              <b>ROOM NO. 202</b>
+            </header>
+            <div className="egg-pop-layout">
+              <div className="egg-pop-copy">
+                <p>SECRET CHARACTER FOUND!</p>
+                <h2 id="mashiro-egg-title"><span>椎名</span><strong>ましろ</strong></h2>
+                <p className="egg-pop-note">深色的游戏宇宙之外，<br />藏着一页只属于真白的明亮画纸。</p>
+                <div className="egg-pop-stickers" aria-label="椎名真白彩蛋暗号">
+                  <span>天才画家</span>
+                  <span>年轮蛋糕</span>
+                  <span>猫与漫画</span>
+                </div>
+              </div>
+              <figure className="egg-mashiro-frame">
+                <img src="/mashiro-official.png" alt="《樱花庄的宠物女孩》动画官方椎名真白人物设定图" />
+                <figcaption>OFFICIAL CHARACTER SHEET · SHIINA MASHIRO</figcaption>
+              </figure>
             </div>
-            <button className="egg-exit" type="button" onClick={() => setMashiroEgg(false)}>
-              合上秘密画页 <span>↗</span>
-            </button>
+            <footer className="egg-pop-foot">
+              <small>© 鴨志田一 / アスキー・メディアワークス / さくら荘製作委員会</small>
+              <button className="egg-exit" type="button" onClick={() => setMashiroEgg(false)}>
+                返回游戏宇宙 <span>↗</span>
+              </button>
+            </footer>
           </section>
           <div className="egg-marquee" aria-hidden="true">
-            <span>SHIINA MASHIRO · ましろ · ROOM 202 · SECRET CANVAS · </span>
-            <span>SHIINA MASHIRO · ましろ · ROOM 202 · SECRET CANVAS · </span>
+            <span>SHIINA MASHIRO ♡ ROOM 202 ♡ BAUMKUCHEN ♡ SECRET CHARACTER ♡ </span>
+            <span>SHIINA MASHIRO ♡ ROOM 202 ♡ BAUMKUCHEN ♡ SECRET CHARACTER ♡ </span>
           </div>
         </div>
       )}
