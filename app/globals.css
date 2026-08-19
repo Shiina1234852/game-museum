@@ -162,8 +162,8 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
   overflow: hidden;
 }
-.core-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .24; filter: saturate(.7) contrast(1.08) brightness(.74); transform: scale(1.06); transition: opacity .4s ease, transform .7s cubic-bezier(.2,.8,.2,1), filter .4s ease; }
-.core-card:hover .core-image, .core-card:focus-visible .core-image { opacity: .38; filter: saturate(.95) contrast(1.05) brightness(.82); transform: scale(1.015); }
+.core-image { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: contain; opacity: .3; filter: saturate(.72) contrast(1.04) brightness(.68); transform: scale(1); transition: opacity .4s ease, transform .7s cubic-bezier(.2,.8,.2,1), filter .4s ease; }
+.core-card:hover .core-image, .core-card:focus-visible .core-image { opacity: .45; filter: saturate(.95) contrast(1.03) brightness(.78); transform: scale(1.018); }
 .core-card h2, .core-card p, .core-meta { position: relative; z-index: 2; }
 .core-card::before, .core-card::after { content: ""; position: absolute; width: 28px; height: 28px; }
 .core-card::before { left: -1px; top: -1px; border-left: 2px solid var(--mashiro-red); border-top: 2px solid var(--mashiro-red); }
@@ -231,16 +231,16 @@ a { color: inherit; text-decoration: none; }
 .game-card:hover::after, .game-card:focus-visible::after { border-color: color-mix(in srgb, var(--card-accent) 55%, transparent); }
 .game-card:focus-visible { outline: 1px solid var(--card-accent); outline-offset: -5px; }
 .card-rank { position: absolute; z-index: 4; top: 19px; left: 19px; width: 35px; height: 35px; display: grid; place-items: center; background: rgba(5,6,7,.76); border: 1px solid rgba(255,255,255,.14); font-family: var(--serif); font-size: 11px; backdrop-filter: blur(8px); }
-.card-art { height: 282px; overflow: hidden; position: relative; display: grid; place-items: center; background:
+.card-art { height: 380px; overflow: hidden; position: relative; display: grid; place-items: center; background:
   radial-gradient(circle at 66% 30%, color-mix(in srgb, var(--card-accent) 85%, white 2%), transparent 9%),
   radial-gradient(circle at 50% 48%, var(--card-accent), var(--card-dark) 43%, #101112 79%);
   transition: filter .35s ease;
 }
-.card-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .78; filter: saturate(.82) brightness(.62) contrast(1.08); transform: scale(1.045); transition: transform .65s cubic-bezier(.2,.8,.2,1), filter .35s ease, opacity .35s ease; }
-.game-card:hover .card-cover, .game-card:focus-visible .card-cover { opacity: .92; filter: saturate(1.02) brightness(.74) contrast(1.04); transform: scale(1.09); }
+.card-cover { position: absolute; z-index: 1; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: contain; opacity: .88; filter: saturate(.86) brightness(.78) contrast(1.04); transform: scale(1); transition: transform .65s cubic-bezier(.2,.8,.2,1), filter .35s ease, opacity .35s ease; }
+.game-card:hover .card-cover, .game-card:focus-visible .card-cover { opacity: 1; filter: saturate(1.02) brightness(.9) contrast(1.02); transform: scale(1.025); }
 .game-card:hover .card-art { filter: saturate(1.18) brightness(1.07); }
-.card-art::before { content: ""; position: absolute; width: 80%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; transform: translate(23%, -9%); }
-.card-art::after { content: ""; position: absolute; width: 150%; height: 68px; background: rgba(4,5,6,.3); border-top: 1px solid rgba(255,255,255,.12); transform: rotate(-13deg) translateY(88px); }
+.card-art::before { content: ""; position: absolute; width: 80%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; transform: translate(23%, -9%); }
+.card-art::after { content: ""; position: absolute; z-index: 1; inset: 0; border: 1px solid rgba(255,255,255,.06); box-shadow: inset 0 -90px 80px -80px rgba(0,0,0,.85); pointer-events: none; }
 .card-horizon { position: absolute; z-index: 2; inset: 12%; border-left: 1px solid rgba(255,255,255,.12); border-right: 1px solid rgba(255,255,255,.06); transform: skewX(-18deg); }
 .card-horizon small { position: absolute; left: 10px; bottom: 4px; color: rgba(255,255,255,.28); font-size: 6px; letter-spacing: .2em; writing-mode: vertical-rl; transform: skewX(18deg); }
 .card-art b { position: relative; z-index: 2; font-family: var(--serif); font-size: clamp(52px, 5vw, 88px); letter-spacing: -.08em; font-weight: 400; color: rgba(255,255,255,.24); text-shadow: 0 14px 44px rgba(0,0,0,.55); mix-blend-mode: screen; transform: translateY(6px); transition: transform .4s cubic-bezier(.2,.8,.2,1), color .35s ease; }
@@ -357,19 +357,22 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
 
 /* Game detail */
 .detail-overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 28px; background: rgba(2,3,3,.76); backdrop-filter: blur(18px); animation: overlay-in .25s ease both; }
-.detail-panel { width: min(980px, 96vw); max-height: min(760px, 92svh); overflow: auto; display: grid; grid-template-columns: .86fr 1.14fr; position: relative; background: #0c0d0e; border: 1px solid rgba(255,255,255,.17); box-shadow: 0 40px 120px rgba(0,0,0,.7); animation: panel-in .35s cubic-bezier(.18,.85,.28,1) both; }
+.detail-panel { width: min(1320px, 96vw); max-height: min(860px, 94svh); overflow: auto; display: grid; grid-template-columns: 1.35fr .8fr; position: relative; background: #0c0d0e; border: 1px solid rgba(255,255,255,.17); box-shadow: 0 40px 120px rgba(0,0,0,.7); animation: panel-in .35s cubic-bezier(.18,.85,.28,1) both; }
 .detail-close { position: absolute; z-index: 4; top: 17px; right: 17px; width: 38px; height: 38px; border-radius: 50%; color: #aaa; border: 1px solid rgba(255,255,255,.17); background: rgba(4,5,5,.62); backdrop-filter: blur(10px); cursor: pointer; font-size: 22px; line-height: 1; transition: .2s ease; }
 .detail-close:hover { color: #fff; border-color: var(--detail); transform: rotate(90deg); }
-.detail-art { min-height: 640px; overflow: hidden; position: relative; display: grid; place-items: center; background:
+.detail-art { min-height: 780px; overflow: hidden; position: relative; display: grid; place-items: center; background:
   radial-gradient(circle at 65% 24%, color-mix(in srgb, var(--detail) 80%, white 4%), transparent 9%),
   radial-gradient(circle at 46% 45%, var(--detail), var(--detail-dark) 38%, #0b0c0d 76%);
 }
-.detail-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.88) brightness(.7) contrast(1.07); transform: scale(1.01); animation: detail-image-in .42s ease both; }
-.detail-art::before { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(5,6,7,.08), rgba(5,6,7,.03) 48%, rgba(5,6,7,.86)); }
-.detail-art::after { content: ""; position: absolute; z-index: 1; inset: 0; border: 1px solid rgba(255,255,255,.1); box-shadow: inset 0 0 80px rgba(0,0,0,.25); }
-.detail-grid { position: absolute; z-index: 2; inset: 0; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 46px 46px; pointer-events: none; }
-.detail-mark { position: absolute; z-index: 2; left: 25px; top: 42px; font-family: var(--serif); font-weight: 400; font-size: 68px; line-height: 1; letter-spacing: -.08em; text-shadow: 0 12px 36px rgba(0,0,0,.55); color: rgba(255,255,255,.25); }
+.detail-image-link { position: absolute; z-index: 2; inset: 18px 18px 112px; display: grid; place-items: center; cursor: zoom-in; }
+.detail-image { width: 100%; height: 100%; object-fit: contain; filter: none; transform: scale(1); animation: detail-image-in .42s ease both; }
+.detail-art::before { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(5,6,7,.06), rgba(5,6,7,0) 55%, rgba(5,6,7,.52)); pointer-events: none; }
+.detail-art::after { content: ""; position: absolute; z-index: 3; inset: 0; border: 1px solid rgba(255,255,255,.1); box-shadow: inset 0 0 70px rgba(0,0,0,.18); pointer-events: none; }
+.detail-grid { position: absolute; z-index: 1; inset: 0; opacity: .08; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 46px 46px; pointer-events: none; }
+.detail-mark { position: absolute; z-index: 1; left: 25px; top: 42px; font-family: var(--serif); font-weight: 400; font-size: 68px; line-height: 1; letter-spacing: -.08em; text-shadow: 0 12px 36px rgba(0,0,0,.55); color: rgba(255,255,255,.12); }
 .detail-art > small { position: absolute; left: 25px; top: 23px; z-index: 3; color: rgba(255,255,255,.68); font-size: 7px; letter-spacing: .18em; text-shadow: 0 2px 8px #000; }
+.detail-media-mode { position: absolute; z-index: 4; right: 20px; top: 22px; color: #f1eee8; padding: 8px 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(3,4,4,.64); backdrop-filter: blur(10px); font-size: 7px; letter-spacing: .14em; }
+.detail-original { position: absolute; z-index: 4; right: 21px; bottom: 91px; color: rgba(255,255,255,.72); font-size: 7px; letter-spacing: .11em; pointer-events: none; }
 .detail-gallery { position: absolute; z-index: 4; left: 20px; right: 20px; bottom: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
 .detail-gallery button { min-width: 0; height: 58px; padding: 0; overflow: hidden; position: relative; color: #fff; border: 1px solid rgba(255,255,255,.15); background: #080909; cursor: pointer; opacity: .62; transition: opacity .2s ease, border-color .2s ease, transform .2s ease; }
 .detail-gallery button:hover, .detail-gallery button:focus-visible, .detail-gallery button.is-active { opacity: 1; border-color: var(--detail); transform: translateY(-3px); }
@@ -394,7 +397,7 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
 
 @keyframes overlay-in { from { opacity: 0; } }
 @keyframes panel-in { from { opacity: 0; transform: translateY(22px) scale(.98); } }
-@keyframes detail-image-in { from { opacity: .25; transform: scale(1.035); } }
+@keyframes detail-image-in { from { opacity: .25; transform: scale(.985); } }
 
 @media (max-width: 1050px) {
   .topbar { width: min(100% - 36px, 960px); }
@@ -418,7 +421,7 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .dimension-list button:nth-child(2) { border-right: 0; }
   .dimension-list button:nth-child(3), .dimension-list button:nth-child(4) { border-bottom: 0; }
   .dimension-list button:nth-child(4) { border-right: 0; }
-  .detail-panel { grid-template-columns: .78fr 1.22fr; }
+  .detail-panel { grid-template-columns: 1.12fr .88fr; }
   .detail-content { padding-inline: 42px; }
 }
 
@@ -432,7 +435,7 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .game-grid { grid-template-columns: repeat(2, 1fr); }
   .detail-overlay { padding: 12px; }
   .detail-panel { display: block; max-height: 95svh; }
-  .detail-art { min-height: 310px; }
+  .detail-art { min-height: min(72svh, 680px); }
   .detail-mark { font-size: 54px; }
 }
 
@@ -467,7 +470,7 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .result-line { margin-top: 25px; }
   .game-grid { grid-template-columns: 1fr; }
   .game-card { min-height: 510px; }
-  .card-art { height: 290px; }
+  .card-art { height: 420px; }
   .card-art b { font-size: 94px; }
   .record-stage { grid-template-columns: 1fr; margin-top: 38px; }
   .record-card { min-height: 265px; }
@@ -488,7 +491,7 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .closing-section h2 { font-size: 42px; }
   footer { width: calc(100% - 28px); height: 90px; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
   .detail-overlay { padding: 7px; }
-  .detail-art { min-height: 260px; }
+  .detail-art { min-height: min(76svh, 620px); }
   .detail-gallery { left: 12px; right: 12px; bottom: 12px; gap: 5px; }
   .detail-gallery button { height: 45px; }
   .detail-content { padding: 45px 26px 32px; }

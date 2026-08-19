@@ -9,9 +9,10 @@ type StyleVars = CSSProperties & Record<`--${string}`, string>;
 const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
 
-function coverFor(game: Game) {
-  const extension = game.id === "dynasty-warriors-5" ? "png" : "jpg";
-  return `/games/${game.id}/cover.${extension}`;
+function posterFor(game: Game) {
+  if (game.id === "dynasty-warriors-5") return `/games/${game.id}/poster.png`;
+  if (game.id === "pragmata" || game.id === "re-requiem") return `/games/${game.id}/poster.webp`;
+  return `/games/${game.id}/poster.jpg`;
 }
 
 function screenshotsFor(game: Game) {
@@ -29,12 +30,12 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [latestFirst, setLatestFirst] = useState(false);
   const [selected, setSelected] = useState<Game | null>(null);
-  const [galleryIndex, setGalleryIndex] = useState(1);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const [dimensionId, setDimensionId] = useState(dimensions[0].id);
   const [pulse, setPulse] = useState(true);
 
   const active = games.find((game) => game.id === activeId) ?? topGames[0];
-  const selectedGallery = selected ? [coverFor(selected), ...screenshotsFor(selected)] : [];
+  const selectedGallery = selected ? [posterFor(selected), ...screenshotsFor(selected)] : [];
   const activeDimension = dimensions.find((item) => item.id === dimensionId) ?? dimensions[0];
   const dimensionGames = activeDimension.gameIds
     .map((id) => games.find((game) => game.id === id))
@@ -75,7 +76,7 @@ export default function Home() {
 
   const openGame = (game: Game) => {
     setSelected(game);
-    setGalleryIndex(1);
+    setGalleryIndex(0);
   };
 
   return (
@@ -135,7 +136,7 @@ export default function Home() {
           <div className="orbit orbit-two" />
           <div className="orbit orbit-three" />
           <button className="core-card" type="button" onClick={() => openGame(active)}>
-            <img className="core-image" src={coverFor(active)} alt="" />
+            <img className="core-image" src={posterFor(active)} alt="" />
             <span className="core-kicker">CURRENT CANVAS · 202</span>
             <b className="core-score">{active.score.toFixed(1)}</b>
             <h2>{lines(active.title).map((line) => <span key={line}>{line}</span>)}</h2>
@@ -231,7 +232,7 @@ export default function Home() {
                 >
                   <span className="card-rank">{String(rank).padStart(2, "0")}</span>
                   <span className="card-art" aria-hidden="true">
-                    <img className="card-cover" src={coverFor(game)} alt="" loading="lazy" />
+                    <img className="card-cover" src={posterFor(game)} alt="" loading="lazy" />
                     <i className="card-horizon"><small>202 / M</small></i>
                     <b>{game.mark}</b>
                     <small>{game.year}</small>
@@ -376,14 +377,26 @@ export default function Home() {
           >
             <button className="detail-close" type="button" onClick={() => setSelected(null)} aria-label="关闭档案">×</button>
             <div className="detail-art">
-              <img
-                className="detail-image"
-                src={selectedGallery[galleryIndex]}
-                alt={galleryIndex === 0 ? `${selected.title} 主视觉` : `${selected.title} 游戏内截图 ${galleryIndex}`}
-              />
+              <a
+                className="detail-image-link"
+                href={selectedGallery[galleryIndex]}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={galleryIndex === 0 ? `以原始尺寸打开《${selected.title}》完整海报` : `以原始尺寸打开《${selected.title}》游戏内截图 ${galleryIndex}`}
+              >
+                <img
+                  className="detail-image"
+                  src={selectedGallery[galleryIndex]}
+                  alt={galleryIndex === 0 ? `${selected.title} 完整海报` : `${selected.title} 游戏内截图 ${galleryIndex}`}
+                />
+              </a>
               <span className="detail-grid" />
               <b className="detail-mark">{selected.mark}</b>
               <small>ROOM 202 · PAGE {String(games.findIndex((game) => game.id === selected.id) + 1).padStart(2, "0")}</small>
+              <span className="detail-media-mode">
+                {galleryIndex === 0 ? "FULL POSTER · 完整海报" : `IN-GAME · 实机画面 0${galleryIndex}`}
+              </span>
+              <span className="detail-original">点击图片查看原始尺寸 ↗</span>
               <div className="detail-gallery" aria-label="游戏图片画廊">
                 {selectedGallery.map((image, index) => (
                   <button
@@ -391,7 +404,7 @@ export default function Home() {
                     className={galleryIndex === index ? "is-active" : ""}
                     key={image}
                     onClick={() => setGalleryIndex(index)}
-                    aria-label={index === 0 ? "查看游戏主视觉" : `查看游戏内截图 ${index}`}
+                    aria-label={index === 0 ? "查看完整游戏海报" : `查看游戏内截图 ${index}`}
                   >
                     <img src={image} alt="" />
                     <span>{String(index + 1).padStart(2, "0")}</span>

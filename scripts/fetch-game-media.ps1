@@ -40,9 +40,9 @@ $games = @(
 )
 
 function Save-RemoteFile {
-  param([string]$Url, [string]$Destination)
+  param([string]$Url, [string]$Destination, [switch]$Replace)
 
-  if ((Test-Path -LiteralPath $Destination) -and ((Get-Item -LiteralPath $Destination).Length -gt 5000)) {
+  if (-not $Replace -and (Test-Path -LiteralPath $Destination) -and ((Get-Item -LiteralPath $Destination).Length -gt 5000)) {
     return $true
   }
 
@@ -87,10 +87,12 @@ foreach ($game in $selectedGames) {
 
     $data = $entry.data
     [void](Save-RemoteFile -Url $data.header_image -Destination (Join-Path $folder "cover.jpg"))
+    $posterUrl = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/$($game.AppId)/library_600x900_2x.jpg"
+    [void](Save-RemoteFile -Url $posterUrl -Destination (Join-Path $folder "poster.jpg"))
 
     $shotNumber = 1
     foreach ($screenshot in ($data.screenshots | Select-Object -First 3)) {
-      [void](Save-RemoteFile -Url $screenshot.path_thumbnail -Destination (Join-Path $folder "shot-$shotNumber.jpg"))
+      [void](Save-RemoteFile -Url $screenshot.path_full -Destination (Join-Path $folder "shot-$shotNumber.jpg") -Replace)
       $shotNumber++
     }
 
