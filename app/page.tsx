@@ -158,6 +158,13 @@ export default function Home() {
             <div><b>05</b><span>重点装裱</span></div>
             <div><b>9.9</b><span>最高落款</span></div>
           </div>
+          <aside className="curator-card" aria-label="策展序言">
+            <span>CURATOR&apos;S NOTE · 202</span>
+            <p>我记住的从来不只是玩法，而是某个角色的眼神、某段旅途的余温，以及通关后仍没有散去的情绪。</p>
+            <div className="collection-tags" aria-label="收藏偏好">
+              <i>CHARACTER</i><i>NARRATIVE</i><i>COMBAT</i><i>ATMOSPHERE</i>
+            </div>
+          </aside>
         </div>
 
         <div className="universe" id="universe" aria-label="一档游戏星图">
@@ -208,6 +215,12 @@ export default function Home() {
             <h2>记忆，<em>依次陈列</em></h2>
           </div>
           <p className="section-note">评分只描述我的体验，不负责说服任何人。<br />点击任意作品，进入它的独立档案。</p>
+        </div>
+
+        <div className="exhibition-legend" aria-label="档位导览">
+          <div><b>Ⅰ</b><span><small>PERMANENT</small>构成审美坐标的核心馆藏</span></div>
+          <div><b>Ⅱ</b><span><small>SELECTED</small>愿意反复谈起的喜爱之作</span></div>
+          <div><b>Ⅲ</b><span><small>MEMORIES</small>共同拼成旅程的游玩手记</span></div>
         </div>
 
         <div className="archive-controls">
