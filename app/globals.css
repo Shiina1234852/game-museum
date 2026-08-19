@@ -1526,3 +1526,6 @@ html, body { background: #101512; }
 .detail-tier-seal { color: #f0eee7; border-color: rgba(240,238,231,.18); background: rgba(15,19,17,.84); }
 .detail-panel.is-featured .detail-content { background: linear-gradient(150deg, rgba(15,97,94,.13), transparent 43%), #19211e; }
 .detail-panel.is-field-note .detail-content { background: linear-gradient(150deg, rgba(104,71,95,.12), transparent 43%), #20191f; }
+.curator-mashiro-seal { position: absolute; z-index: 4; right: 16px; top: 15px; width: 34px; height: 34px; display: grid; place-items: center; padding: 0; color: #f4e8dc; border: 1px solid rgba(216,189,133,.68); border-radius: 50%; background: #7d3041; box-shadow: 0 5px 16px rgba(0,0,0,.22), inset 0 0 0 3px rgba(255,255,255,.035); font-family: var(--serif); font-size: 15px; cursor: pointer; transform: rotate(-7deg); transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .3s ease; }
+.curator-mashiro-seal:hover, .curator-mashiro-seal:focus-visible { background: #a8465b; box-shadow: 0 0 0 5px rgba(180,147,85,.13), 0 0 26px rgba(188,81,105,.48); transform: rotate(3deg) scale(1.13); outline: none; }
+.curator-mashiro-seal::after { content: "?"; position: absolute; right: -5px; top: -7px; color: #d8bd85; font-family: Arial, sans-serif; font-size: 7px; font-weight: 700; }

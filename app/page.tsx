@@ -164,6 +164,15 @@ export default function Home() {
             <div className="collection-tags" aria-label="收藏偏好">
               <i>CHARACTER</i><i>NARRATIVE</i><i>COMBAT</i><i>ATMOSPHERE</i>
             </div>
+            <button
+              className="curator-mashiro-seal"
+              type="button"
+              onClick={() => setMashiroEgg(true)}
+              aria-label="打开一枚不属于展签的神秘落款"
+              title="这枚落款似乎可以触碰……"
+            >
+              ま
+            </button>
           </aside>
         </div>
 
