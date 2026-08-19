@@ -56,12 +56,15 @@ a { color: inherit; text-decoration: none; }
   transition: background .3s ease;
 }
 
-.mashiro-signatures { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; color: var(--mashiro-paper); }
-.mashiro-signatures span { position: absolute; font-family: var(--serif); letter-spacing: .22em; opacity: .025; writing-mode: vertical-rl; }
-.mashiro-signatures span:nth-child(1) { top: 31vh; right: 2.2vw; font-size: 34px; }
-.mashiro-signatures span:nth-child(2) { top: 132vh; left: 1vw; font-size: 140px; color: var(--mashiro-red); opacity: .018; }
-.mashiro-signatures span:nth-child(3) { top: 278vh; right: 1vw; font-size: 22px; color: var(--mashiro-blue); }
-.mashiro-signatures span:nth-child(4) { top: 465vh; left: 1.5vw; font-size: 26px; }
+.mashiro-signatures { position: absolute; inset: 0; z-index: 6; pointer-events: none; overflow: hidden; color: var(--mashiro-paper); }
+.mashiro-signatures > * { position: absolute; font-family: var(--serif); letter-spacing: .22em; opacity: .025; writing-mode: vertical-rl; }
+.mashiro-signatures > *:nth-child(1) { top: 31vh; right: 2.2vw; font-size: 34px; }
+.mashiro-signatures > *:nth-child(2) { top: 132vh; left: .3vw; font-size: 140px; color: var(--mashiro-red); opacity: .018; }
+.mashiro-signatures > *:nth-child(3) { top: 278vh; right: 1vw; font-size: 22px; color: var(--mashiro-blue); }
+.mashiro-signatures > *:nth-child(4) { top: 465vh; left: 1.5vw; font-size: 26px; }
+.mashiro-egg-trigger { pointer-events: auto; width: 118px; height: 155px; padding: 0; display: grid; place-items: center; line-height: .8; border: 0; background: transparent; cursor: crosshair; transition: opacity .45s ease, color .45s ease, filter .45s ease, transform .45s cubic-bezier(.2,.8,.2,1); }
+.mashiro-egg-trigger:hover, .mashiro-egg-trigger:focus-visible { opacity: .55; color: #ff7f91; filter: drop-shadow(0 0 15px rgba(255,111,132,.72)) drop-shadow(0 0 45px rgba(113,212,255,.42)); transform: rotate(-4deg) scale(1.06); }
+.mashiro-egg-trigger:focus-visible { outline: 1px solid rgba(255,255,255,.32); outline-offset: -9px; }
 .mashiro-signatures::before { content: ""; position: absolute; top: 18vh; left: 17vw; width: 5px; height: 10px; border-radius: 100% 0 100% 0; background: rgba(217,103,112,.14); transform: rotate(31deg); box-shadow:
   68vw 42vh rgba(217,103,112,.10),
   12vw 154vh rgba(217,103,112,.07),
@@ -355,6 +358,78 @@ a { color: inherit; text-decoration: none; }
 .closing-section > a span { color: var(--accent); font-size: 15px; }
 footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; color: #555652; font-size: 7px; letter-spacing: .18em; border-top: 1px solid rgba(255,255,255,.06); }
 
+/* Mashiro secret canvas */
+.mashiro-egg { position: fixed; z-index: 220; inset: 0; overflow: hidden; display: grid; place-items: center; isolation: isolate; color: #fff; background:
+  radial-gradient(circle at 50% 50%, rgba(255,255,255,.2), transparent 23%),
+  radial-gradient(circle at 18% 16%, rgba(255,65,112,.74), transparent 29%),
+  radial-gradient(circle at 84% 22%, rgba(46,198,255,.7), transparent 31%),
+  radial-gradient(circle at 72% 86%, rgba(255,190,45,.58), transparent 28%),
+  #08080d;
+  animation: egg-reveal .85s cubic-bezier(.16,.8,.2,1) both;
+}
+.mashiro-egg::before { content: ""; position: absolute; z-index: -2; inset: -45vmax; background: conic-gradient(from 30deg, transparent 0 8%, rgba(255,75,124,.26) 9% 13%, transparent 14% 29%, rgba(65,207,255,.22) 30% 35%, transparent 36% 54%, rgba(255,207,82,.23) 55% 61%, transparent 62% 80%, rgba(182,93,255,.22) 81% 86%, transparent 87%); animation: egg-spin 18s linear infinite; }
+.mashiro-egg::after { content: ""; position: absolute; z-index: 8; inset: 0; pointer-events: none; opacity: .16; mix-blend-mode: soft-light; background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(circle, black, transparent 75%); }
+.egg-close { position: absolute; z-index: 20; top: 25px; right: 27px; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; color: #fff; background: rgba(8,8,13,.22); backdrop-filter: blur(14px); font-size: 25px; cursor: pointer; transition: transform .25s ease, background .25s ease, border-color .25s ease; }
+.egg-close:hover, .egg-close:focus-visible { transform: rotate(90deg) scale(1.08); background: rgba(255,255,255,.15); border-color: #fff; outline: none; }
+.egg-aurora, .egg-rays, .egg-ribbons, .egg-sparkles, .egg-orbits, .egg-marquee { pointer-events: none; }
+.egg-aurora { position: absolute; z-index: -1; inset: 0; filter: blur(12px) saturate(1.3); mix-blend-mode: screen; }
+.egg-aurora i { position: absolute; width: 58vw; height: 22vw; min-height: 180px; border-radius: 50%; opacity: .68; animation: egg-float 4.8s ease-in-out infinite alternate; }
+.egg-aurora i:nth-child(1) { left: -14vw; top: 5%; background: linear-gradient(90deg, #ff2f78, transparent); transform: rotate(22deg); }
+.egg-aurora i:nth-child(2) { right: -13vw; top: 13%; background: linear-gradient(90deg, transparent, #32c7ff); transform: rotate(-21deg); animation-delay: -.8s; }
+.egg-aurora i:nth-child(3) { left: 4vw; bottom: -10%; background: linear-gradient(90deg, #ffba31, transparent); transform: rotate(-15deg); animation-delay: -1.6s; }
+.egg-aurora i:nth-child(4) { right: 2vw; bottom: -11%; background: linear-gradient(90deg, transparent, #9f55ff); transform: rotate(17deg); animation-delay: -2.4s; }
+.egg-rays { position: absolute; inset: -20%; opacity: .36; background: repeating-conic-gradient(from 7deg at 50% 50%, rgba(255,255,255,.25) 0deg 1deg, transparent 1.5deg 13deg); mask-image: radial-gradient(circle, transparent 0 9%, black 13%, transparent 67%); animation: egg-rays-pulse 2.6s ease-in-out infinite alternate; }
+.egg-ribbons { position: absolute; inset: 0; pointer-events: none; }
+.egg-ribbons i { position: absolute; left: 50%; top: 50%; width: 130vmax; height: 5px; transform-origin: center; background: linear-gradient(90deg, transparent 8%, rgba(255,255,255,.9) 46%, #fff 50%, rgba(255,255,255,.9) 54%, transparent 92%); box-shadow: 0 0 10px #fff, 0 0 28px currentColor; opacity: 0; animation: egg-ribbon-flash 1.25s cubic-bezier(.1,.7,.2,1) both; }
+.egg-ribbons i:nth-child(1) { color: #ff4d82; transform: translate(-50%,-50%) rotate(12deg); animation-delay: .08s; }
+.egg-ribbons i:nth-child(2) { color: #4ed7ff; transform: translate(-50%,-50%) rotate(-19deg); animation-delay: .14s; }
+.egg-ribbons i:nth-child(3) { color: #ffd063; transform: translate(-50%,-50%) rotate(37deg); animation-delay: .2s; }
+.egg-ribbons i:nth-child(4) { color: #d579ff; transform: translate(-50%,-50%) rotate(-44deg); animation-delay: .26s; }
+.egg-ribbons i:nth-child(5) { color: #ff6b71; transform: translate(-50%,-50%) rotate(67deg); animation-delay: .32s; }
+.egg-ribbons i:nth-child(6) { color: #70efff; transform: translate(-50%,-50%) rotate(-70deg); animation-delay: .38s; }
+.egg-ribbons i:nth-child(7) { color: #fff; transform: translate(-50%,-50%) rotate(90deg); animation-delay: .44s; }
+.egg-sparkles { position: absolute; inset: 0; pointer-events: none; }
+.egg-sparkles i { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); opacity: 0; border-radius: 50%; color: hsl(var(--hue) 95% 70%); background: currentColor; box-shadow: 0 0 9px 2px currentColor, 0 0 26px currentColor; animation: egg-spark 1.6s cubic-bezier(.12,.75,.2,1) var(--delay) both, egg-twinkle 2.2s ease-in-out calc(var(--delay) + 1.6s) infinite alternate; }
+.egg-orbits { position: absolute; width: min(82vmin, 760px); aspect-ratio: 1; display: grid; place-items: center; pointer-events: none; }
+.egg-orbits > i { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; animation: egg-orbit 17s linear infinite; }
+.egg-orbits > i:nth-child(2) { inset: 11%; border-style: dashed; animation-duration: 12s; animation-direction: reverse; }
+.egg-orbits > i:nth-child(3) { inset: 23%; border-color: rgba(255,255,255,.16); animation-duration: 9s; }
+.egg-orbits span { position: absolute; left: 50%; top: -13px; min-width: 48px; height: 25px; padding: 0 9px; display: grid; place-items: center; color: #15151b; border-radius: 18px; background: #fff; box-shadow: 0 0 26px rgba(255,255,255,.82); font-style: normal; font-family: var(--serif); font-size: 9px; letter-spacing: .12em; }
+.egg-orbits > i:nth-child(2) span { left: 11%; top: 18%; background: #ff6d8e; color: #fff; }
+.egg-orbits > i:nth-child(3) span { left: auto; right: 6%; top: 61%; background: #6edcff; }
+.egg-canvas { position: relative; z-index: 5; width: min(710px, calc(100vw - 42px)); min-height: 490px; padding: 74px 68px 58px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px solid rgba(255,255,255,.72); background: linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,.055)); box-shadow: 0 0 0 9px rgba(255,255,255,.055), 0 45px 140px rgba(0,0,0,.42), inset 0 0 80px rgba(255,255,255,.07); backdrop-filter: blur(25px) saturate(1.25); animation: egg-canvas-in 1s cubic-bezier(.12,.82,.18,1) .32s both; }
+.egg-canvas::before, .egg-canvas::after { content: ""; position: absolute; width: 160px; height: 160px; border: 1px solid rgba(255,255,255,.36); transform: rotate(45deg); }
+.egg-canvas::before { left: -110px; top: -110px; box-shadow: 0 0 45px rgba(255,80,130,.42); }
+.egg-canvas::after { right: -110px; bottom: -110px; box-shadow: 0 0 45px rgba(72,210,255,.42); }
+.egg-kicker { margin: 0 0 30px; color: rgba(255,255,255,.82); font-size: 8px; letter-spacing: .28em; animation: egg-copy-in .7s ease .78s both; }
+.egg-glyph { position: absolute; z-index: -1; right: -14px; top: -48px; font-family: var(--serif); font-size: 260px; color: rgba(255,255,255,.075); transform: rotate(7deg); }
+.egg-canvas h2 { display: flex; align-items: baseline; gap: 18px; margin: 0; font-family: var(--serif); font-weight: 400; line-height: .9; letter-spacing: -.06em; text-shadow: 0 0 45px rgba(255,255,255,.36); }
+.egg-canvas h2 span { font-size: clamp(40px, 6vw, 76px); color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.9); animation: egg-title-left .8s cubic-bezier(.1,.8,.2,1) .58s both; }
+.egg-canvas h2 strong { font-size: clamp(78px, 11vw, 146px); font-weight: 400; color: transparent; background: linear-gradient(110deg, #fff 7%, #ffadc1 32%, #fff 47%, #81e6ff 67%, #fff5b9 89%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 22px rgba(255,115,153,.46)); animation: egg-title-right .9s cubic-bezier(.1,.8,.2,1) .64s both, egg-shimmer 3s linear 1.6s infinite; }
+.egg-copy { margin: 30px 0 23px; color: rgba(255,255,255,.92); font-family: var(--serif); font-size: 16px; letter-spacing: .05em; animation: egg-copy-in .8s ease .94s both; }
+.egg-tokens { display: flex; align-items: center; justify-content: center; gap: 12px; color: rgba(255,255,255,.6); font-size: 8px; letter-spacing: .12em; animation: egg-copy-in .8s ease 1.06s both; }
+.egg-tokens i { width: 3px; height: 3px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px #fff; }
+.egg-exit { margin-top: 38px; padding: 13px 0 10px; display: flex; align-items: center; gap: 24px; color: #fff; border: 0; border-bottom: 1px solid rgba(255,255,255,.65); background: transparent; font-size: 9px; letter-spacing: .16em; cursor: pointer; animation: egg-copy-in .8s ease 1.18s both; transition: gap .25s ease, border-color .25s ease, text-shadow .25s ease; }
+.egg-exit:hover, .egg-exit:focus-visible { gap: 34px; border-color: #ff9bb4; text-shadow: 0 0 18px rgba(255,255,255,.85); outline: none; }
+.egg-exit span { color: #ffd86b; font-size: 15px; }
+.egg-marquee { position: absolute; z-index: 6; left: 0; right: 0; bottom: 18px; display: flex; width: max-content; color: rgba(255,255,255,.42); font-size: 8px; letter-spacing: .36em; white-space: nowrap; animation: egg-marquee 20s linear infinite; }
+.egg-marquee span { padding-right: 3em; }
+
+@keyframes egg-reveal { from { opacity: 0; filter: saturate(2) brightness(2.5); transform: scale(1.08); } }
+@keyframes egg-spin { to { transform: rotate(360deg); } }
+@keyframes egg-float { to { transform: translate3d(6vw, 4vh, 0) rotate(-9deg) scale(1.12); opacity: .88; } }
+@keyframes egg-rays-pulse { to { opacity: .72; transform: scale(1.04) rotate(2deg); } }
+@keyframes egg-ribbon-flash { 0% { opacity: 0; width: 0; } 35% { opacity: 1; } 100% { opacity: 0; width: 130vmax; } }
+@keyframes egg-spark { 0% { opacity: 0; transform: scale(0) rotate(0); } 45% { opacity: 1; transform: scale(3.5) rotate(120deg); } 100% { opacity: .72; transform: scale(1) rotate(240deg); } }
+@keyframes egg-twinkle { to { opacity: .18; transform: scale(.45); } }
+@keyframes egg-orbit { to { transform: rotate(360deg); } }
+@keyframes egg-canvas-in { from { opacity: 0; transform: scale(.42) rotate(-4deg); filter: blur(20px) brightness(3); } 70% { transform: scale(1.035) rotate(.4deg); } }
+@keyframes egg-title-left { from { opacity: 0; transform: translateX(-80px); filter: blur(14px); } }
+@keyframes egg-title-right { from { opacity: 0; transform: translateX(100px) scale(1.3); filter: blur(16px) brightness(2); } }
+@keyframes egg-copy-in { from { opacity: 0; transform: translateY(18px); } }
+@keyframes egg-shimmer { to { background-position: -220% 0; } }
+@keyframes egg-marquee { to { transform: translateX(-50%); } }
+
 /* Game detail */
 .detail-overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 28px; background: rgba(2,3,3,.76); backdrop-filter: blur(18px); animation: overlay-in .25s ease both; }
 .detail-panel { width: min(1320px, 96vw); max-height: min(860px, 94svh); overflow: auto; display: grid; grid-template-columns: 1.35fr .8fr; position: relative; background: #0c0d0e; border: 1px solid rgba(255,255,255,.17); box-shadow: 0 40px 120px rgba(0,0,0,.7); animation: panel-in .35s cubic-bezier(.18,.85,.28,1) both; }
@@ -490,6 +565,15 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .closing-section { min-height: 570px; }
   .closing-section h2 { font-size: 42px; }
   footer { width: calc(100% - 28px); height: 90px; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
+  .egg-close { top: 13px; right: 13px; width: 40px; height: 40px; }
+  .egg-orbits { width: 92vmin; }
+  .egg-canvas { width: calc(100vw - 28px); min-height: 520px; padding: 62px 22px 52px; }
+  .egg-canvas h2 { gap: 9px; }
+  .egg-canvas h2 span { font-size: clamp(36px, 11vw, 48px); }
+  .egg-canvas h2 strong { font-size: clamp(72px, 22vw, 98px); }
+  .egg-copy { max-width: 280px; font-size: 14px; line-height: 1.7; }
+  .egg-tokens { max-width: 270px; flex-wrap: wrap; line-height: 1.8; }
+  .egg-marquee { bottom: 10px; }
   .detail-overlay { padding: 7px; }
   .detail-art { min-height: min(76svh, 620px); }
   .detail-gallery { left: 12px; right: 12px; bottom: 12px; gap: 5px; }
@@ -498,6 +582,10 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
   .detail-head b { font-size: 38px; }
   .detail-content h2 { font-size: 38px; }
   .detail-note { font-size: 13px; margin-block: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mashiro-egg *, .mashiro-egg::before, .mashiro-egg::after { animation: none !important; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

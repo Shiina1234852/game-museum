@@ -8,6 +8,13 @@ type StyleVars = CSSProperties & Record<`--${string}`, string>;
 
 const topGames = games.slice(0, 5);
 const records = games.filter((game) => game.record);
+const mashiroSparkles = Array.from({ length: 48 }, (_, index) => ({
+  x: (index * 37 + 11) % 100,
+  y: (index * 61 + 7) % 100,
+  size: 2 + (index % 5),
+  delay: (index % 12) * 70,
+  hue: [4, 38, 191, 216, 326][index % 5],
+}));
 
 function posterFor(game: Game) {
   if (game.id === "pragmata" || game.id === "re-requiem") return `/games/${game.id}/poster.webp`;
@@ -32,6 +39,7 @@ export default function Home() {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [dimensionId, setDimensionId] = useState(dimensions[0].id);
   const [pulse, setPulse] = useState(true);
+  const [mashiroEgg, setMashiroEgg] = useState(false);
 
   const active = games.find((game) => game.id === activeId) ?? topGames[0];
   const selectedGallery = selected ? [posterFor(selected), ...screenshotsFor(selected)] : [];
@@ -56,16 +64,19 @@ export default function Home() {
   }, [latestFirst, query, tier]);
 
   useEffect(() => {
-    document.body.style.overflow = selected ? "hidden" : "";
+    document.body.style.overflow = selected || mashiroEgg ? "hidden" : "";
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelected(null);
+      if (event.key === "Escape") {
+        if (mashiroEgg) setMashiroEgg(false);
+        else setSelected(null);
+      }
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", closeOnEscape);
     };
-  }, [selected]);
+  }, [mashiroEgg, selected]);
 
   const handlePointer = (event: ReactPointerEvent<HTMLElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -86,11 +97,19 @@ export default function Home() {
     >
       <div className="ambient-grid" aria-hidden="true" />
       <div className="cursor-light" aria-hidden="true" />
-      <div className="mashiro-signatures" aria-hidden="true">
-        <span>ROOM 202</span>
-        <span>ま</span>
-        <span>BAUM / 08</span>
-        <span>CANVAS 31</span>
+      <div className="mashiro-signatures">
+        <span aria-hidden="true">ROOM 202</span>
+        <button
+          className="mashiro-egg-trigger"
+          type="button"
+          onClick={() => setMashiroEgg(true)}
+          aria-label="一枚几乎看不见的铅笔签名"
+          title="这好像不是装饰……"
+        >
+          ま
+        </button>
+        <span aria-hidden="true">BAUM / 08</span>
+        <span aria-hidden="true">CANVAS 31</span>
       </div>
 
       <header className="topbar">
@@ -353,6 +372,62 @@ export default function Home() {
         <span>ROOM 202 · PERSONAL GAME SKETCHBOOK</span>
         <span>31 WORLDS / ONE QUIET CANVAS</span>
       </footer>
+
+      {mashiroEgg && (
+        <div
+          className="mashiro-egg"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mashiro-egg-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setMashiroEgg(false);
+          }}
+        >
+          <button className="egg-close" type="button" onClick={() => setMashiroEgg(false)} aria-label="关闭椎名真白彩蛋">×</button>
+          <div className="egg-aurora" aria-hidden="true"><i /><i /><i /><i /></div>
+          <div className="egg-rays" aria-hidden="true" />
+          <div className="egg-ribbons" aria-hidden="true">
+            {Array.from({ length: 7 }, (_, index) => <i key={index} />)}
+          </div>
+          <div className="egg-sparkles" aria-hidden="true">
+            {mashiroSparkles.map((sparkle, index) => (
+              <i
+                key={index}
+                style={{
+                  "--x": `${sparkle.x}%`,
+                  "--y": `${sparkle.y}%`,
+                  "--size": `${sparkle.size}px`,
+                  "--delay": `${sparkle.delay}ms`,
+                  "--hue": String(sparkle.hue),
+                } as StyleVars}
+              />
+            ))}
+          </div>
+          <div className="egg-orbits" aria-hidden="true">
+            <i><span>猫</span></i>
+            <i><span>202</span></i>
+            <i><span>BAUM</span></i>
+          </div>
+          <section className="egg-canvas">
+            <p className="egg-kicker">SECRET CANVAS FOUND · ROOM 202</p>
+            <div className="egg-glyph" aria-hidden="true">ま</div>
+            <h2 id="mashiro-egg-title"><span>椎名</span><strong>真白</strong></h2>
+            <p className="egg-copy">你找到了藏在游戏宇宙边缘的白色画布。</p>
+            <div className="egg-tokens" aria-label="彩蛋暗号">
+              <span>白色画布</span><i />
+              <span>猫的脚印</span><i />
+              <span>年轮蛋糕</span>
+            </div>
+            <button className="egg-exit" type="button" onClick={() => setMashiroEgg(false)}>
+              合上秘密画页 <span>↗</span>
+            </button>
+          </section>
+          <div className="egg-marquee" aria-hidden="true">
+            <span>SHIINA MASHIRO · ましろ · ROOM 202 · SECRET CANVAS · </span>
+            <span>SHIINA MASHIRO · ましろ · ROOM 202 · SECRET CANVAS · </span>
+          </div>
+        </div>
+      )}
 
       {selected && (
         <div className="detail-overlay" role="presentation" onMouseDown={(event) => {
