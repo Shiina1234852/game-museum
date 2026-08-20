@@ -623,6 +623,8 @@ footer { width: min(100% - 72px, 1520px); height: 76px; margin: auto; position: 
 .detail-content dl div { display: grid; grid-template-columns: 90px 1fr; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 10px; }
 .detail-content dt { color: #5d5e5a; }
 .detail-content dd { color: #aaa; margin: 0; }
+.detail-content dd span { padding: 0 .5em; color: var(--detail); opacity: .72; }
+.detail-content time { font-variant-numeric: tabular-nums; letter-spacing: .1em; }
 .detail-disclaimer { color: #51524f; font-size: 8px; letter-spacing: .07em; margin: 26px 0 0; }
 .detail-overlay.is-masterpiece { overflow: hidden; background:
   radial-gradient(circle at 24% 28%, color-mix(in srgb, var(--detail) 18%, transparent), transparent 34%),

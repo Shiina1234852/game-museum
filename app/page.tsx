@@ -602,6 +602,8 @@ export default function Home() {
               )}
               <dl>
                 <div><dt>类型</dt><dd>{selected.genre}</dd></div>
+                <div><dt>开发 / 发行</dt><dd>{selected.developer} <span aria-hidden="true">·</span> {selected.publisher}</dd></div>
+                <div><dt>首发时间</dt><dd><time dateTime={selected.releaseDate}>{selected.releaseDate.replaceAll("-", ".")}</time></dd></div>
                 <div><dt>记忆标签</dt><dd>{selected.tags.join(" · ")}</dd></div>
                 <div><dt>榜单位置</dt><dd>NO. {String(games.findIndex((game) => game.id === selected.id) + 1).padStart(2, "0")}</dd></div>
               </dl>
