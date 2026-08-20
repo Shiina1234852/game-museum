@@ -114,15 +114,7 @@ export default function Home() {
       <div className="cursor-light" aria-hidden="true" />
       <div className="mashiro-signatures">
         <span aria-hidden="true">ROOM 202</span>
-        <button
-          className="mashiro-egg-trigger"
-          type="button"
-          onClick={() => setMashiroEgg(true)}
-          aria-label="一枚几乎看不见的铅笔签名"
-          title="这好像不是装饰……"
-        >
-          ま
-        </button>
+        <span aria-hidden="true">ま</span>
         <span aria-hidden="true">BAUM / 08</span>
         <span aria-hidden="true">CANVAS 31</span>
       </div>
@@ -499,7 +491,7 @@ export default function Home() {
                 </div>
               </div>
               <figure className="egg-mashiro-frame">
-                <img src={assetUrl("mashiro-rooftop.jpg")} alt="《樱花庄的宠物女孩》椎名真白坐在天台上的插画" />
+                <img src={assetUrl("mashiro-sketchbook.png")} alt="《樱花庄的宠物女孩》椎名真白在房间里拿着画板" />
                 <figcaption>SHIINA MASHIRO · SAKURASOU NO PET NA KANOJO</figcaption>
               </figure>
             </div>
