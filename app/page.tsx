@@ -499,7 +499,7 @@ export default function Home() {
                 </div>
               </div>
               <figure className="egg-mashiro-frame">
-                <img src={assetUrl("mashiro-portrait.png")} alt="《樱花庄的宠物女孩》椎名真白宣传插画" />
+                <img src={assetUrl("mashiro-rooftop.jpg")} alt="《樱花庄的宠物女孩》椎名真白坐在天台上的插画" />
                 <figcaption>SHIINA MASHIRO · SAKURASOU NO PET NA KANOJO</figcaption>
               </figure>
             </div>
